@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(require("./routes/routes"))
 
+require("./config/db.js")()
+
 app.listen(PORT, () => {
   console.log(`Servido funcionando na porta ${PORT}.`)
 })
