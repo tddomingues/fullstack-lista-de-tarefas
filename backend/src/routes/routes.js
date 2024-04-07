@@ -1,8 +1,10 @@
 const express = require("express")
 const router = express.Router()
 
-const authRoute = require("../routes/authRoute")
+const userRoute = require("./userRoute")
+const taskRoute = require("./taskRoute")
 
-router.use("/api/users", authRoute)
+router.use("/api/users", userRoute)
+router.use("/api/tasks", taskRoute)
 
 module.exports = router
