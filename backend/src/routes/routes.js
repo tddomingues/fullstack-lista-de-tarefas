@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
-router.get("/", ((req, res) => {
-  return res.status(200).json({ msg: "Rotas funcionando." })
-}))
+const authRoute = require("../routes/authRoute")
+
+router.use("/api/users", authRoute)
 
 module.exports = router
