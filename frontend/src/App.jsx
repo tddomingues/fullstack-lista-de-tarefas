@@ -1,5 +1,5 @@
 import "./App.css";
-import Home from "./pages/home/home.jsx";
+import Home from "./pages/Home.jsx";
 import { GlobalStyle } from "./styles/global.js";
 import { Theme } from "./styles/theme.jsx";
 

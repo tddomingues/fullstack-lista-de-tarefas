@@ -37,7 +37,7 @@ export const theme = {
   },
   fontFamily: {
     heading: ["IBM Plex Sans", "sans-serif"].join(","),
-    sans: ["Open Sans", "Arial", "Helvetica", "sans-serif"].join(","),
+    sans: ["Roboto", "Open Sans", "Arial", "Helvetica", "sans-serif"].join(","),
     mono: ["IBM Plex Mono", "serif"].join(","),
   },
   fontSize: {
