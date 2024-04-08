@@ -1,4 +1,5 @@
 import "./App.css";
+import Home from "./pages/home/home.jsx";
 import { GlobalStyle } from "./styles/global.js";
 import { Theme } from "./styles/theme.jsx";
 
@@ -9,6 +10,7 @@ function App() {
     <BrowserRouter>
       <Theme>
         <GlobalStyle />
+        <Home />
       </Theme>
     </BrowserRouter>
   );
