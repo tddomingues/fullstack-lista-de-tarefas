@@ -23,7 +23,12 @@ const register = async (req, res) => {
       email, name, password: cryptoPassword
     })
 
-    return res.status(200).json({ userId: user._id })
+    const SECRET_KEY = process.env.SECRET_KEY
+    const userId = user._id
+
+    const token = jwt.sign({userId}, SECRET_KEY, {expiresIn: "70m"})
+
+    return res.status(200).json({ userId: user._id, token  })
 
   } catch (error) {
     return res.status(400).json({ error: "Erro no cadastro do usuário." })
@@ -98,7 +103,25 @@ const updateUser = async (req, res) => {
 
 }
 
+const getUser = async (req, res) => {
+    const {userId} = req.body
 
-module.exports = { register, login, updateUser }
+    try {
+      const user = await User.findById({_id: userId})
+
+    if(!user) return res.status(400).json({error: "Usuário não encontrado."})
+    
+    return res.status(200).json({user})
+  } catch (error) {
+    return res.status(400).json({error: "Erro ao encontrar o usuário."})
+    }
+
+    
+
+   
+}
+
+
+module.exports = { register, login, updateUser, getUser }
 
 

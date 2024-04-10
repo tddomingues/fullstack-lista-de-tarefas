@@ -34,6 +34,7 @@ export const theme = {
     neutral950: "#0a0a0a",
     primary: " #5471F1 ",
     primary_hover: "#445DA6",
+    transparent: "transparent",
   },
   fontFamily: {
     heading: ["IBM Plex Sans", "sans-serif"].join(","),

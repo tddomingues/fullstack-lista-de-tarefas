@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 //controllers
-const { register, login, updateUser } = require("../controllers/userController")
+const { register, login, updateUser, getUser } = require("../controllers/userController")
 
 //middlewares
 const validate = require("../middlewares/validate")
@@ -13,5 +13,6 @@ const tokenValidate = require("../middlewares/tokenValidate")
 router.post("/register", validate(registerValidation), register)
 router.post("/login", validate(loginValidation), login)
 router.put("/update", tokenValidate, validate(updateValidation), updateUser)
+router.get("/", tokenValidate, getUser)
 
 module.exports = router

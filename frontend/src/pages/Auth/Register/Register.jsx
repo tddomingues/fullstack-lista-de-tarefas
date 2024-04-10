@@ -1,39 +1,35 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
 
 import { Section, Main } from "../styles";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
-//redux
 import { useDispatch, useSelector } from "react-redux";
-import { reset, login } from "../../../slices/userSlice";
-import Navbar from "../../../components/Sidebar/Sidebar";
-import Footer from "../../../components/Footer/Footer";
+import { register, reset } from "../../../slices/userSlice";
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error, sucess, user } = useSelector((state) => state.user);
+  const { error, sucess, loading } = useSelector((state) => state.user);
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  console.log(typeof user);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
+      name,
       email,
       password,
+      confirmPassword,
     };
 
-    dispatch(login(data));
+    dispatch(register(data));
   };
-
-  if (sucess && !loading) {
-    navigate("/");
-  }
 
   useEffect(() => {
     dispatch(reset());
@@ -44,14 +40,22 @@ const Login = () => {
       <Main>
         <Section>
           <div>
-            <h2>Entrar</h2>
+            <h2>Registrar</h2>
             <form onSubmit={handleSubmit}>
+              <label>
+                <span>Nome</span>
+                <input
+                  type="text"
+                  onChange={({ target }) => setName(target.value)}
+                  value={name || ""}
+                />
+              </label>
               <label>
                 <span>Email</span>
                 <input
                   type="text"
                   onChange={({ target }) => setEmail(target.value)}
-                  value={email}
+                  value={email || ""}
                 />
               </label>
               <label>
@@ -59,7 +63,15 @@ const Login = () => {
                 <input
                   type="password"
                   onChange={({ target }) => setPassword(target.value)}
-                  value={password}
+                  value={password || ""}
+                />
+              </label>
+              <label>
+                <span>Confirmar senha</span>
+                <input
+                  type="password"
+                  onChange={({ target }) => setConfirmPassword(target.value)}
+                  value={confirmPassword || ""}
                 />
               </label>
               {error && (
@@ -67,12 +79,12 @@ const Login = () => {
                   <p>{error}</p>
                 </div>
               )}
-              <input type="submit" value="Entrar" />
+              <input type="submit" value="Registrar" />
             </form>
             <div className="redirect-to-login">
-              <p>Não possui cadastro?</p>
+              <p>Já possui cadastro?</p>
               <span>
-                <Link to="/register">Cadastrar</Link>
+                <Link to="/login">Entrar</Link>
               </span>
             </div>
           </div>
@@ -82,4 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

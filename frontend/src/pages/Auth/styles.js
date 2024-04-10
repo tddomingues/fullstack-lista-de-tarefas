@@ -1,19 +1,22 @@
 import styled from "styled-components";
 
+export const Main = styled.main`
+  flex-grow: 1;
+`;
+
 export const Section = styled.section`
-  background-color: ${({ theme }) => theme.colors.neutral900};
-  padding: 5rem 0;
+  background-color: ${({ theme }) => theme.colors.neutral950};
+  height: 100%;
+  display: grid;
+  place-items: center;
 
   > div {
     width: 400px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background-color: ${({ theme }) => theme.colors.neutral800};
+    background-color: ${({ theme }) => theme.colors.neutral900};
     padding: 1.5rem 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid ${({ theme }) => theme.colors.neutral700};
 
     > h2 {
       font-weight: 400;
@@ -29,8 +32,8 @@ export const Section = styled.section`
       > .error-message {
         background-color: ${({ theme }) => theme.colors.red};
         font-size: ${({ theme }) => theme.fontSize.md};
+        font-weight: 300;
         padding: 0.5rem;
-        border-radius: 0.5rem;
         text-align: center;
       }
 
@@ -41,16 +44,19 @@ export const Section = styled.section`
 
         //input type text and password
         > input {
-          background-color: ${({ theme }) => theme.colors.neutral700};
-          color: ${({ theme }) => theme.colors.neutral50};
-          border: none;
+          width: 100%;
+          background-color: ${({ theme }) => theme.colors.neutral800};
           padding: 0.5rem;
-          border-radius: 0.5rem;
+          border: none;
+          border-radius: 1rem;
+          color: ${({ theme }) => theme.colors.neutral100};
+          font-weight: 300;
         }
 
         > span {
           font-weight: 400;
           font-size: ${({ theme }) => theme.fontSize.md};
+          padding-left: 4px;
         }
       }
 

@@ -21,6 +21,12 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     color: ${({ theme }) => theme.colors.neutral50};
     font-family:  ${({ theme }) => theme.fontFamily.sans};
+
+    #root {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
   }
 
   body,

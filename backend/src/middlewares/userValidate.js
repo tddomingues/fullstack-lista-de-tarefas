@@ -30,7 +30,7 @@ const loginValidation = yup.object({
       .email("O e-mail deve ser válido."),
     password: yup
       .string()
-      .required("O nome é obrigatório.")
+      .required("A senha é obrigatória.")
       .min(3, "O senha deve conter mais de 3 caracteres."),
   })
 })
