@@ -5,11 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Section, Main } from "../styles";
 
 import { useDispatch, useSelector } from "react-redux";
-import { register, reset } from "../../../slices/userSlice";
+import { register, reset } from "../../../slices/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { error, sucess, loading } = useSelector((state) => state.user);
+  const { error, sucess, loading } = useSelector((state) => state.auth);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

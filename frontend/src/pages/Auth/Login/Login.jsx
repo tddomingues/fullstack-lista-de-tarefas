@@ -6,14 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { reset, login } from "../../../slices/userSlice";
-import Navbar from "../../../components/Sidebar/Sidebar";
-import Footer from "../../../components/Footer/Footer";
+import { reset, login } from "../../../slices/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, sucess, user } = useSelector((state) => state.user);
+  const { loading, error, sucess, user } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

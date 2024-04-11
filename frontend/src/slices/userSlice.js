@@ -1,55 +1,32 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import { userService } from "../service/userService";
-
-const user = localStorage.getItem("user");
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { authService } from "../service/userService";
 
 const initialState = {
-  user: user ? user : null,
-  error: null,
+  user: {},
   loading: false,
+  error: null,
   sucess: false,
 };
 
-export const register = createAsyncThunk(
-  "user/register",
+export const updateProfile = createAsyncThunk(
+  "user/update",
   async (data, thunkAPI) => {
-    const res = await userService.registerRequest(data);
+    const token = thunkAPI.getState().user.user.token;
+    console.log(token);
+
+    const res = await authService.updateProfile(data, token);
 
     if (res["error"]) {
-      return thunkAPI.rejectWithValue(res["error"]);
-    }
-
-    if (res.userId) {
-      localStorage.setItem("user", res.userId);
+      thunkAPI.rejectWithValue(res["error"]);
     }
 
     return res;
   },
 );
 
-export const login = createAsyncThunk("user/login", async (data, thunkAPI) => {
-  const res = await userService.loginRequest(data);
-
-  if (res["error"]) {
-    return thunkAPI.rejectWithValue(res["error"]);
-  }
-
-  if (res.userId) {
-    localStorage.setItem("user", res.userId);
-  }
-
-  return res;
-});
-
 export const userSlice = createSlice({
-  name: "user",
+  name: "userSlice",
   initialState,
-  // extraReducers: {
-  //   [register.fulfilled]: (state, action) => {
-  //     state.user = action.payload; //dado enviado no dispatch
-  //   },
-  // },
   reducers: {
     reset: (state) => {
       state.loading = false;
@@ -57,39 +34,9 @@ export const userSlice = createSlice({
       state.sucess = false;
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(register.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.loading = false;
-        state.error = null;
-        state.sucess = true;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.user = null;
-        state.error = action.payload;
-        state.sucess = false;
-        state.loading = false;
-      })
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.loading = false;
-        state.sucess = true;
-        state.error = null;
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.user = null;
-        state.loading = false;
-        state.error = action.payload;
-        state.sucess = false;
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase();
+  // },
 });
 
 export const { reset } = userSlice.actions;
