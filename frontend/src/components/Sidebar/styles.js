@@ -1,68 +1,58 @@
 import styled from "styled-components";
 
 export const Header = styled.header`
-  background-color: ${({ theme }) => theme.colors.neutral900};
+  background-color: ${({ theme }) => theme.colors.neutral100};
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  width: 8rem;
+  align-items: center;
+  gap: 2rem;
+  border: 1px solid ${({ theme }) => theme.colors.neutral300};
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 
   > .nav {
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 
     > div {
-      padding: 0.5rem 1rem;
-
-      > a {
+      a {
+        font-size: ${({ theme }) => theme.fontSize.xl};
         font-weight: 600;
-        font-size: ${({ theme }) => theme.fontSize["3xl"]};
       }
     }
 
     > nav {
-      width: 100%;
-
       > ul {
         display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: center;
+        gap: 1rem;
 
         > li {
-          width: 100%;
-          font-weight: 400;
-          font-size: ${({ theme }) => theme.fontSize.md};
-          transition: 0.5s ease;
+          transition: 0.5s all ease;
           padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          font-size: ${({ theme }) => theme.fontSize.md};
+          font-weight: 500;
           cursor: pointer;
 
           > a {
             display: flex;
             align-items: center;
-            justify-content: start;
-            gap: 0.75rem;
+            justify-content: center;
+            gap: 0.25rem;
 
-            > span {
-              font-size: ${({ theme }) => theme.fontSize.xl};
+            svg {
+              font-size: ${({ theme }) => theme.fontSize.base};
+              margin-top: 2px;
             }
           }
 
           &:hover {
-            background-color: ${({ theme }) => theme.colors.neutral800};
+            background-color: ${({ theme }) => theme.colors.neutral200};
           }
         }
       }
-    }
-  }
-
-  .btn-logout {
-    padding: 0.5rem;
-
-    span {
-      font-size: ${({ theme }) => theme.fontSize.xl};
     }
   }
 `;

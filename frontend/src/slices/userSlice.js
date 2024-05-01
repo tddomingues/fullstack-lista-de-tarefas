@@ -5,20 +5,31 @@ const initialState = {
   user: {},
   loading: false,
   error: null,
-  sucess: false,
+  success: false,
+  message: null,
 };
 
 export const updateProfile = createAsyncThunk(
-  "user/update",
+  "user/updateprofile",
   async (data, thunkAPI) => {
-    const token = thunkAPI.getState().user.user.token;
-    console.log(token);
+    const user = thunkAPI.getState().auth.user;
 
-    const res = await authService.updateProfile(data, token);
+    const res = await authService.updateProfile(data, user.token);
 
     if (res["error"]) {
-      thunkAPI.rejectWithValue(res["error"]);
+      return thunkAPI.rejectWithValue(res["error"]);
     }
+
+    return res;
+  },
+);
+
+export const getUser = createAsyncThunk(
+  "user/getuser",
+  async (id, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+
+    const res = await authService.getUser(id, user.token);
 
     return res;
   },
@@ -29,14 +40,39 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.loading = false;
       state.error = null;
-      state.sucess = false;
+      state.message = null;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase();
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      });
+  },
 });
 
 export const { reset } = userSlice.actions;

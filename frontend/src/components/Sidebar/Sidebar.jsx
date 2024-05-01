@@ -4,7 +4,20 @@ import { LuHome, LuUser2, LuLogOut } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/Button";
 
+import { useDispatch } from "react-redux";
+import { logout } from "../../slices/authSlice";
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("user")) || "";
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+
+    dispatch(logout());
+  };
+
   return (
     <Header>
       <div className="nav">
@@ -18,26 +31,26 @@ const Navbar = () => {
                 <span>
                   <LuHome />
                 </span>
-                Home
+                <span>Home</span>
               </Link>
             </li>
             <li>
-              <Link to="/profile">
+              <Link to={`/profile/${user.userId}`}>
                 <span>
                   <LuUser2 />
                 </span>
-                Perfil
+                <span>Perfil</span>
               </Link>
             </li>
           </ul>
         </nav>
       </div>
       <div className="btn-logout">
-        <Button type="transparent">
+        <Button type="neutral950" onClick={handleLogout}>
+          Sair
           <span>
             <LuLogOut />
           </span>
-          Log out
         </Button>
       </div>
     </Header>

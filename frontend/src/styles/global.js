@@ -17,15 +17,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${({ theme }) => theme.colors.gray900};
+    background-color: ${({ theme }) => theme.colors.neutral100};
     -webkit-font-smoothing: antialiased;
-    color: ${({ theme }) => theme.colors.neutral50};
+    color: ${({ theme }) => theme.colors.neutral950};
     font-family:  ${({ theme }) => theme.fontFamily.sans};
 
     #root {
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      min-height: 100vh;
     }
   }
 

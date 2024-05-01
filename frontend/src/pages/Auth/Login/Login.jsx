@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 import { Section, Main } from "../styles";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +9,10 @@ import { reset, login } from "../../../slices/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error, sucess, user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  console.log(typeof user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,10 +24,6 @@ const Login = () => {
 
     dispatch(login(data));
   };
-
-  if (sucess && !loading) {
-    navigate("/");
-  }
 
   useEffect(() => {
     dispatch(reset());
@@ -70,7 +62,7 @@ const Login = () => {
             <div className="redirect-to-login">
               <p>Não possui cadastro?</p>
               <span>
-                <Link to="/register">Cadastrar</Link>
+                <Link to="/auth/register">Cadastrar</Link>
               </span>
             </div>
           </div>

@@ -84,7 +84,7 @@ const Register = () => {
             <div className="redirect-to-login">
               <p>Já possui cadastro?</p>
               <span>
-                <Link to="/login">Entrar</Link>
+                <Link to="/auth/login">Entrar</Link>
               </span>
             </div>
           </div>

@@ -1,65 +1,46 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-import { Section } from "./styles";
-import { LuSearch, LuFileInput } from "react-icons/lu";
+//router
+import { useNavigate } from "react-router-dom";
+
+//styles
+import { SectionStyles } from "./styles";
+import { LuSearch } from "react-icons/lu";
+
+//components
 import { Button } from "../../../components/ui/Button";
+import Tasks from "./Tasks/Tasks";
+import Loading from "../../../components/Loading/Loading";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
+
+import { tasksByUser } from "../../../slices/taskSlice";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { tasks, error, loading } = useSelector((state) => state.task);
+
+  useEffect(() => {
+    dispatch(tasksByUser());
+  }, [dispatch]);
+
+  if (loading) return <Loading />;
   return (
-    <Section>
+    <SectionStyles>
       <div className="create-and-search">
-        <Button type="primary">Criar Tarefa</Button>
+        <Button type="purple" onClick={() => navigate("/new-task")}>
+          Criar Tarefa
+        </Button>
         <div>
           <input type="text" name="" id="" placeholder="Busque uma tarefa" />
           <LuSearch />
         </div>
       </div>
-      <div className="tasks">
-        <table>
-          <caption>Atividades</caption>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Prazo de Conclusão</th>
-              <th>Criador</th>
-              <th>Projeto</th>
-              <th>Prioridade</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Projeto X</td>
-              <td>12/01/2024</td>
-              <td>por Tiago</td>
-              <td>
-                <Link to="/project/:id">
-                  <LuFileInput />
-                </Link>
-              </td>
-              <td>Alta</td>
-            </tr>
-            <tr>
-              <td>Projeto X</td>
-              <td>12/01/2024</td>
-              <td>por Tiago</td>
-              <td>
-                <Link>link</Link>
-              </td>
-              <td>Alta</td>
-            </tr>
-            <tr>
-              <td>Projeto X</td>
-              <td>12/01/2024</td>
-              <td>por Tiago</td>
-              <td>
-                <Link>link</Link>
-              </td>
-              <td>Alta</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </Section>
+      <Tasks tasks={tasks} error={error} loading={loading} />
+    </SectionStyles>
   );
 };
 

@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/api/users";
+const url = "http://localhost:3000/api/auth";
 import { fetchConfig } from "../utils/config";
 
 const registerRequest = async (data) => {

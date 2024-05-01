@@ -13,7 +13,9 @@ const tokenValidate = (req, res, next) => {
 
     const SECRET_KEY = process.env.SECRET_KEY
 
-    jwt.verify(token, SECRET_KEY)
+    const payload = jwt.verify(token, SECRET_KEY)
+
+    req.userId = payload.userId
 
     return next()
 

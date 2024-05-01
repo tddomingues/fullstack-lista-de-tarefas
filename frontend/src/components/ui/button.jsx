@@ -3,11 +3,18 @@ import styled from "styled-components";
 export const Button = styled.button`
   color: ${(props) => props.theme.colors.neutral50};
   background-color: ${(props) => props.theme.colors[props.type]};
-  font-size: ${(props) => props.theme.fontSize.base};
-  padding: 0.5rem;
-  border-radius: 1rem;
-  font-weight: 400;
+
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: 500;
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.25rem;
+
+  svg {
+    font-size: ${({ theme }) => theme.fontSize.base};
+    margin-top: 3px;
+  }
 `;

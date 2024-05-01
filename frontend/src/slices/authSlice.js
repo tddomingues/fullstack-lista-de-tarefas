@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { authService } from "../service/authService";
 
-const user = localStorage.getItem("user");
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
   //armazena um objeto '{userId, token}' no momento do login ou registro
@@ -37,7 +37,7 @@ export const login = createAsyncThunk("user/login", async (data, thunkAPI) => {
   }
 
   if (res.userId) {
-    localStorage.setItem("user", res.userId);
+    localStorage.setItem("user", JSON.stringify(res));
   }
 
   return res;
@@ -51,6 +51,9 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.sucess = false;
+    },
+    logout: (state) => {
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -88,5 +91,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, logout } = authSlice.actions;
 export default authSlice.reducer;

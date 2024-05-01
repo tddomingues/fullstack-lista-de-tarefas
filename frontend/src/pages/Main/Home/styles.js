@@ -1,33 +1,34 @@
 import styled from "styled-components";
 
-export const Section = styled.section`
-  margin: 1rem;
-  padding: 1rem 1rem 0.5rem 1rem;
+export const SectionStyles = styled.section`
+  padding: 1rem 0rem;
 
   > .create-and-search {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding-bottom: 2rem;
+    margin-bottom: 4rem;
 
     > div {
       position: relative;
-      width: 90%;
+      flex: 1;
       > svg {
         position: absolute;
-        top: 7px;
-        left: 10px;
-        font-size: ${({ theme }) => theme.fontSize.xl};
+        top: 8px;
+        left: 8px;
+        font-size: ${({ theme }) => theme.fontSize.base};
+        color: ${({ theme }) => theme.colors.neutral950};
       }
 
       > input {
         width: 100%;
-        background-color: ${({ theme }) => theme.colors.neutral800};
-        padding: 0.5rem 2.5rem;
+        background-color: ${({ theme }) => theme.colors.neutral300};
+        padding: 0.5rem 2rem;
         border: none;
-        border-radius: 1rem;
-        color: ${({ theme }) => theme.colors.neutral100};
+        border-radius: 0.5rem;
+        color: ${({ theme }) => theme.colors.neutral950};
+        font-size: ${({ theme }) => theme.fontSize.md};
         font-weight: 300;
       }
     }
@@ -37,37 +38,55 @@ export const Section = styled.section`
     > table {
       width: 100%;
       border-collapse: collapse;
+      background-color: ${({ theme }) => theme.colors.neutral300};
+      border-radius: 0.5rem;
+
       > caption {
         text-align: start;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.125rem;
         font-size: ${({ theme }) => theme.fontSize.lg};
+        font-weight: 500;
       }
 
       > thead {
         > tr {
-          background-color: ${({ theme }) => theme.colors.neutral900};
-
           > th {
             padding: 0.5rem;
             text-align: start;
             font-weight: 400;
+            font-size: ${({ theme }) => theme.fontSize.base};
             border: none;
           }
         }
       }
 
       > tbody {
-        > tr {
-          background-color: ${({ theme }) => theme.colors.neutral800};
+        background-color: ${({ theme }) => theme.colors.neutral200};
 
+        > tr {
           > td {
             padding: 0.5rem;
             text-align: start;
-            font-weight: 300;
+            font-weight: 400;
             font-size: ${({ theme }) => theme.fontSize.md};
           }
         }
       }
     }
+  }
+`;
+
+export const PriorityStyles = styled.td`
+  > span {
+    background-color: ${(props) =>
+      props.priority === "baixa"
+        ? props.theme.colors.blue
+        : props.priority === "media"
+          ? props.theme.colors.yellow
+          : props.theme.colors.red};
+    padding: 0.25rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    color: ${({ theme }) => theme.colors.neutral50};
   }
 `;

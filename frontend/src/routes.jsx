@@ -5,24 +5,37 @@ import Register from "./pages/Auth/Register/Register";
 import Main from "./pages/Main/Main";
 import Home from "./pages/Main/Home/Home";
 
-import { useAuth } from "./hooks/useAuth";
+import Profile from "./pages/Main/Profile/Profile";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Auth from "./pages/Auth/Auth";
+import { useSelector } from "react-redux";
+import CreateTask from "./pages/Main/CreateTask/CreateTask";
 
 const AppRoutes = () => {
-  const { auth } = useAuth();
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <Routes>
-      <Route path="/" element={auth ? <Main /> : <Navigate to="/register" />}>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Main />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/" element={<Home />} />
+        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/new-task" element={<CreateTask />} />
+      </Route>
+
+      <Route path="/auth" element={<Auth />}>
+        <Route path="login" element={!user ? <Login /> : <Navigate to="/" />} />
         <Route
-          path="/"
-          element={auth ? <Home /> : <Navigate to="/register" />}
+          path="register"
+          element={!user ? <Register /> : <Navigate to="/" />}
         />
       </Route>
-      <Route path="/login" element={!auth ? <Login /> : <Navigate to="/" />} />
-      <Route
-        path="/register"
-        element={!auth ? <Register /> : <Navigate to="/" />}
-      />
     </Routes>
   );
 };
