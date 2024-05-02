@@ -6,7 +6,12 @@ const taskSchema = new mongoose.Schema(
     project: String,
     priority: String,
     userId: String,
-    deadline: String
+    deadline: String,
+    collaborators: [
+      {
+        _id: String
+      }
+    ]
   },
   {
     timestamps: true

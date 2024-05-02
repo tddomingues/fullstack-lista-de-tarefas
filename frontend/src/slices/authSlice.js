@@ -4,12 +4,14 @@ import { authService } from "../service/authService";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
+console.log("user ", user);
+
 const initialState = {
   //armazena um objeto '{userId, token}' no momento do login ou registro
   user: user ? user : null,
   error: null,
   loading: false,
-  sucess: false,
+  success: false,
 };
 
 export const register = createAsyncThunk(
@@ -22,7 +24,7 @@ export const register = createAsyncThunk(
     }
 
     if (res.userId) {
-      localStorage.setItem("user", res.userId);
+      //localStorage.setItem("user", JSON.stringify(res));
     }
 
     return res;
@@ -50,7 +52,7 @@ export const authSlice = createSlice({
     reset: (state) => {
       state.loading = false;
       state.error = null;
-      state.sucess = false;
+      state.success = false;
     },
     logout: (state) => {
       state.user = null;
@@ -60,17 +62,15 @@ export const authSlice = createSlice({
     builder
       .addCase(register.pending, (state) => {
         state.loading = true;
+        state.user = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload;
         state.loading = false;
-        state.error = null;
-        state.sucess = true;
+        state.success = true;
       })
       .addCase(register.rejected, (state, action) => {
-        state.user = null;
         state.error = action.payload;
-        state.sucess = false;
+        state.success = false;
         state.loading = false;
       })
       .addCase(login.pending, (state) => {
@@ -79,14 +79,14 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
         state.loading = false;
-        state.sucess = true;
+        state.success = true;
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.user = null;
         state.loading = false;
         state.error = action.payload;
-        state.sucess = false;
+        state.success = false;
       });
   },
 });

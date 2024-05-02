@@ -1,10 +1,10 @@
 const Task = require("../models/task")
 
 const createTask = async (req, res) => {
-  const { name, project, priority, userId, deadline } = req.body
+  const { name, project, priority, userId, deadline, collaborators } = req.body
 
   try {
-    await Task.create({ name, project, priority, userId, deadline })
+    await Task.create({ name, project, priority, userId, deadline, collaborators })
 
     return res.status(200).json({ message: "Tarefa criada com sucesso." })
 
@@ -16,7 +16,7 @@ const createTask = async (req, res) => {
 const getTasksByUser = async (req, res) => {
 
   try {
-    const tasks = await Task.find({ userId: req.userId })
+    const tasks = await Task.find({ userId: req.userId }).sort({ createdAt: -1 })
 
     return res.status(200).json(tasks)
   } catch (error) {

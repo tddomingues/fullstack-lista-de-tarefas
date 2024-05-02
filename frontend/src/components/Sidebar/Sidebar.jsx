@@ -22,7 +22,7 @@ const Navbar = () => {
     <Header>
       <div className="nav">
         <div>
-          <Link>Logo</Link>
+          <Link to="/">Logo</Link>
         </div>
         <nav>
           <ul>

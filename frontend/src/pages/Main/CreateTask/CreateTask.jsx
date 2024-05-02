@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TaskStyles } from "./styles";
 import { useNavigate } from "react-router-dom";
@@ -8,24 +8,34 @@ import { createTask } from "../../../slices/taskSlice";
 import Message from "../../../components/MessageError/MessageError";
 import { Button } from "../../../components/ui/Button";
 import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
+import { getUsers } from "../../../slices/userSlice";
 
 const CreateTask = () => {
   const [name, setName] = useState("");
   const [created_at, setCreated_at] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState(
+    new Date().toISOString().split("T")[0],
+  );
   const [creator, setCreator] = useState("");
   const [project, setProject] = useState("");
   const [priority, setPriority] = useState("");
+  const [collaborator, setCollaborator] = useState("");
+  const [collaborators, setCollaborators] = useState([]);
   const [taskCreated, setTaskCreated] = useState(false);
 
   const dispatch = useDispatch();
   const { success, error } = useSelector((state) => state.task);
+  const { users, user: sliceUser } = useSelector((state) => state.user);
 
-  console.log(error);
+  console.log(users);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
+
+    const filteredCollaboratorKeys = collaborators.map((elem) => {
+      return { _id: elem._id };
+    });
 
     const data = {
       name,
@@ -33,6 +43,7 @@ const CreateTask = () => {
       priority,
       userId: user.userId,
       deadline,
+      collaborators: filteredCollaboratorKeys,
     };
 
     console.log(data);
@@ -41,9 +52,33 @@ const CreateTask = () => {
   };
 
   const minDate = new Date().toISOString().split("T")[0];
-  console.log(new Date("2024-05-02").toISOString());
+  //console.log(new Date("2024-05-02").toISOString());
 
   const navigate = useNavigate();
+
+  const addCollaborator = (e) => {
+    e.preventDefault();
+
+    const userExists = collaborators.filter((elem) => {
+      return elem.email === collaborator;
+    });
+
+    if (userExists.length !== 0) return;
+
+    const _collaborator = users.filter((user) => {
+      return user.email === collaborator && sliceUser._id !== user._id;
+    });
+
+    if (_collaborator.length === 0) return;
+
+    setCollaborators((prev) => [...prev, ..._collaborator]);
+  };
+
+  console.log(collaborators);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   return (
     <TaskStyles>
@@ -76,17 +111,56 @@ const CreateTask = () => {
               </label>
             </div>
 
-            <label>
-              <span>Prazo de Entrega</span>
-              <input
-                type="date"
-                name=""
-                id=""
-                min={minDate}
-                onChange={({ target }) => setDeadline(target.value)}
-                value={deadline || minDate}
-              />
-            </label>
+            <div>
+              <div>
+                <div>
+                  <label>
+                    <span>Pesquise por Colaborador(es/as)</span>
+                    <input
+                      type="search"
+                      name=""
+                      id=""
+                      onChange={({ target }) => {
+                        setCollaborator(target.value);
+                      }}
+                      value={collaborator || ""}
+                      placeholder="Pesquisa pelo e-mail do usuário."
+                    />
+                  </label>
+                  <Button type="neutral950" onClick={addCollaborator}>
+                    Adicionar
+                  </Button>
+                </div>
+
+                <label>
+                  {/* <span>Veja seus colaborador(es/as)</span> */}
+                  <select name="" id="">
+                    <option value="">Seus colaborador(es/as)</option>
+                    {collaborators &&
+                      collaborators.map((collaborator) => (
+                        <option
+                          value={collaborator._id}
+                          disabled
+                          key={collaborator._id}
+                        >
+                          {`${collaborator.name} (${collaborator.email})`}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+              </div>
+              <label>
+                <span>Prazo de Entrega</span>
+                <input
+                  type="date"
+                  name=""
+                  id=""
+                  min={minDate}
+                  onChange={({ target }) => setDeadline(target.value)}
+                  value={deadline || minDate}
+                />
+              </label>
+            </div>
 
             <label>
               <span>Projeto</span>

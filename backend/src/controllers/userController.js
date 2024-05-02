@@ -41,24 +41,34 @@ const updateUser = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-    const {id} = req.params
+  const { id } = req.params
 
-    try {
-      const user = await User.findById({_id: id})
+  try {
+    const user = await User.findById({ _id: id })
 
-    if(!user) return res.status(400).json({error: "Usuário não encontrado."})
-    
-    return res.status(200).json({user})
+    if (!user) return res.status(400).json({ error: "Usuário não encontrado." })
+
+    return res.status(200).json({ user })
   } catch (error) {
-    return res.status(400).json({error: "Erro ao encontrar o usuário."})
-    }
+    return res.status(400).json({ error: "Erro ao encontrar o usuário." })
+  }
+}
 
+const getUsers = async (req, res) => {
+
+  try {
+
+    const users = await User.find()
+
+    return res.status(200).json({ users })
     
+  } catch (error) {
+    return res.status(400).json({error: "Erro ao encontrar os usuários."})
+  }
 
-   
 }
 
 
-module.exports = {updateUser, getUser }
+module.exports = { updateUser, getUser, getUsers }
 
 

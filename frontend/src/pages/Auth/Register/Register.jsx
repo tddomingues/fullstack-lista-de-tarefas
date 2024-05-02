@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 
 import { Section, Main } from "../styles";
 
@@ -9,12 +9,14 @@ import { register, reset } from "../../../slices/authSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { error, sucess, loading } = useSelector((state) => state.auth);
+  const { error, success } = useSelector((state) => state.auth);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  console.log("success ", success);
 
   const navigate = useNavigate();
 
@@ -34,6 +36,8 @@ const Register = () => {
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
+
+  if (success) return <Navigate to="/auth/login" />;
 
   return (
     <>

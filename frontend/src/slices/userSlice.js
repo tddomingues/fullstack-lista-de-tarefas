@@ -3,6 +3,7 @@ import { authService } from "../service/userService";
 
 const initialState = {
   user: {},
+  users: [],
   loading: false,
   error: null,
   success: false,
@@ -30,6 +31,17 @@ export const getUser = createAsyncThunk(
     const user = thunkAPI.getState().auth.user;
 
     const res = await authService.getUser(id, user.token);
+
+    return res;
+  },
+);
+
+export const getUsers = createAsyncThunk(
+  "user/getusers",
+  async (_, thunkAPI) => {
+    const user = thunkAPI.getState().auth.user;
+
+    const res = await authService.getUsers(user.token);
 
     return res;
   },
@@ -69,6 +81,19 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+      .addCase(getUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.users = action.payload.users;
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+      })
+      .addCase(getUsers.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       });

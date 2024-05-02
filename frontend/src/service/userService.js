@@ -19,7 +19,16 @@ const getUser = async (id, token) => {
   return res;
 };
 
+const getUsers = async (token) => {
+  const res = await fetch(url + "/", fetchConfig("GET", null, token))
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return res;
+};
+
 export const authService = {
   updateProfile,
   getUser,
+  getUsers,
 };

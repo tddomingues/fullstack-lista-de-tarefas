@@ -3,12 +3,12 @@ import moment from "moment";
 import "moment/locale/pt-br";
 
 //styles
-import { PriorityStyles } from "./styles";
+import { PriorityStyles, TasksStyles } from "./styles";
 import { LuFileInput } from "react-icons/lu";
 
 const Tasks = ({ tasks }) => {
   return (
-    <div className="tasks">
+    <TasksStyles>
       <table>
         <caption>Atividades</caption>
         <thead>
@@ -37,7 +37,7 @@ const Tasks = ({ tasks }) => {
             ))}
         </tbody>
       </table>
-    </div>
+    </TasksStyles>
   );
 };
 
