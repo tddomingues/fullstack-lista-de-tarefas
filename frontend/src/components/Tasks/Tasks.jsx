@@ -5,12 +5,15 @@ import "moment/locale/pt-br";
 //styles
 import { PriorityStyles, TasksStyles } from "./styles";
 import { LuFileInput } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
-const Tasks = ({ tasks }) => {
+const Tasks = ({ tasks, title }) => {
+  console.log("tasks ", tasks);
+  const navigate = useNavigate();
   return (
     <TasksStyles>
       <table>
-        <caption>Atividades</caption>
+        <caption>{title}</caption>
         <thead>
           <tr>
             <th>Nome</th>
@@ -26,9 +29,9 @@ const Tasks = ({ tasks }) => {
               <tr key={task._id}>
                 <td>{task.name}</td>
                 <td>{moment(task.deadline).format("DD/MM/YYYY")}</td>
-                <td>{task.userId}</td>
-                <td>
-                  <LuFileInput />
+                <td>{task.userId.name}</td>
+                <td onClick={() => navigate(`/project/${task._id}`)}>
+                  <LuFileInput style={{ cursor: "pointer" }} />
                 </td>
                 <PriorityStyles priority={task.priority.toLowerCase()}>
                   <span>{task.priority}</span>

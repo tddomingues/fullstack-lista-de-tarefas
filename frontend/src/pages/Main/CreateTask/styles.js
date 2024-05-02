@@ -19,43 +19,27 @@ export const TaskStyles = styled.section`
     > form {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-
-      > div:nth-child(1) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        > label:nth-child(1) {
-          flex: 1;
-
-          > input {
-            width: 90%;
-          }
-        }
-      }
+      gap: 1rem;
 
       > div:nth-child(2) {
         display: flex;
         align-items: end;
-        justify-content: space-between;
         gap: 1rem;
+
         > div {
           display: flex;
           align-items: end;
-          justify-content: space-between;
-          gap: 1rem;
-
-          > div {
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
-            gap: 0.25rem;
-          }
+          gap: 0.25rem;
         }
       }
 
-      > .btns {
+      > div:nth-child(3) {
+        display: flex;
+        align-items: end;
+        gap: 1rem;
+      }
+
+      > .buttons {
         display: flex;
         justify-content: space-between;
       }

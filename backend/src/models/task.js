@@ -5,11 +5,15 @@ const taskSchema = new mongoose.Schema(
     name: String,
     project: String,
     priority: String,
-    userId: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     deadline: String,
     collaborators: [
       {
-        _id: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
     ],
   },

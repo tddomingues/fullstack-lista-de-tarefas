@@ -3,9 +3,10 @@ import { taskService } from "../service/taskService";
 
 const initialState = {
   tasks: [],
+  task: {},
   loading: false,
   error: null,
-  success: null,
+  success: false,
 };
 
 export const createTask = createAsyncThunk(
@@ -38,13 +39,43 @@ export const tasksByUser = createAsyncThunk(
   },
 );
 
+export const getTask = createAsyncThunk(
+  "task/getTask",
+  async (id, thunkAPI) => {
+    const { user } = thunkAPI.getState().auth;
+
+    const res = await taskService.getTask(id, user);
+
+    if (res.error) {
+      return thunkAPI.rejectWithValue(res);
+    }
+
+    return res;
+  },
+);
+
+export const getTasksDoneCollaboratively = createAsyncThunk(
+  "task/getTasksDoneCollaboratively",
+  async (_, thunkAPI) => {
+    const { user } = thunkAPI.getState().auth;
+    console.log("user ", user);
+    const res = await taskService.getTasksDoneCollaboratively(user);
+
+    if (res.error) return thunkAPI.rejectWithValue(res);
+
+    console.log("taskslice ", res);
+
+    return res;
+  },
+);
+
 const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {
     reset: (state) => {
       state.error = null;
-      state.success = null;
+      state.success = false;
     },
   },
   extraReducers: (builder) => {
@@ -70,6 +101,34 @@ const taskSlice = createSlice({
       .addCase(tasksByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
+      })
+      .addCase(getTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getTask.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.task = action.payload;
+      })
+      .addCase(getTask.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = action.payload.error;
+        state.task = {};
+      })
+      .addCase(getTasksDoneCollaboratively.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getTasksDoneCollaboratively.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.tasks = action.payload;
+      })
+      .addCase(getTasksDoneCollaboratively.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = action.payload.error;
+        state.tasks = [];
       });
   },
 });

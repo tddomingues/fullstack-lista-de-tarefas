@@ -15,7 +15,7 @@ const postCreateTask = async (data, user) => {
 const getTasksByUser = async (user) => {
   const res = await fetch(
     url + "/usertasks",
-    fetchConfig("GET", user.userId, user.token),
+    fetchConfig("GET", null, user.token),
   )
     .then((res) => res.json())
     .catch((err) => err);
@@ -23,4 +23,33 @@ const getTasksByUser = async (user) => {
   return res;
 };
 
-export const taskService = { postCreateTask, getTasksByUser };
+const getTask = async (id, user) => {
+  const res = await fetch(
+    url + "/task/" + id,
+    fetchConfig("GET", null, user.token),
+  )
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return res;
+};
+
+const getTasksDoneCollaboratively = async (user) => {
+  const res = await fetch(
+    url + "/collaboration",
+    fetchConfig("GET", null, user.token),
+  )
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  console.log(user);
+
+  return res;
+};
+
+export const taskService = {
+  postCreateTask,
+  getTasksByUser,
+  getTask,
+  getTasksDoneCollaboratively,
+};

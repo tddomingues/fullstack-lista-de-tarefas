@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SectionStyles = styled.section`
   padding: 1rem 0rem;
 
-  > .create-and-search {
+  > div:nth-child(1) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -31,6 +31,18 @@ export const SectionStyles = styled.section`
         font-size: ${({ theme }) => theme.fontSize.md};
         font-weight: 300;
       }
+    }
+  }
+
+  > .no-tasks {
+    background-color: ${({ theme }) => theme.colors.neutral300};
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    > p {
+      text-align: center;
+      font-size: ${({ theme }) => theme.fontSize.lg};
+      font-weight: 500;
     }
   }
 `;

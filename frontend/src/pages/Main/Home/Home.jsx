@@ -9,7 +9,7 @@ import { LuSearch } from "react-icons/lu";
 
 //components
 import { Button } from "../../../components/ui/Button";
-import Tasks from "./Tasks/Tasks";
+import Tasks from "../../../components/Tasks/Tasks";
 import Loading from "../../../components/Loading/Loading";
 
 //redux
@@ -23,6 +23,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const { tasks, error, loading } = useSelector((state) => state.task);
 
+  console.log(tasks.length === 0);
+
   useEffect(() => {
     dispatch(tasksByUser());
   }, [dispatch]);
@@ -30,7 +32,7 @@ const Home = () => {
   if (loading) return <Loading />;
   return (
     <SectionStyles>
-      <div className="create-and-search">
+      <div>
         <Button type="purple" onClick={() => navigate("/new-task")}>
           Criar Tarefa
         </Button>
@@ -39,7 +41,13 @@ const Home = () => {
           <LuSearch />
         </div>
       </div>
-      <Tasks tasks={tasks} error={error} loading={loading} />
+      {tasks.length !== 0 ? (
+        <Tasks tasks={tasks} error={error} loading={loading} />
+      ) : (
+        <div className="no-tasks">
+          <p>Você não possui tarefas.</p>
+        </div>
+      )}
     </SectionStyles>
   );
 };

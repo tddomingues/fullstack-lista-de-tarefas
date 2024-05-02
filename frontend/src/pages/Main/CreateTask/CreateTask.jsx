@@ -12,22 +12,18 @@ import { getUsers } from "../../../slices/userSlice";
 
 const CreateTask = () => {
   const [name, setName] = useState("");
-  const [created_at, setCreated_at] = useState("");
   const [deadline, setDeadline] = useState(
     new Date().toISOString().split("T")[0],
   );
-  const [creator, setCreator] = useState("");
   const [project, setProject] = useState("");
-  const [priority, setPriority] = useState("");
+  const [priority, setPriority] = useState("alta");
   const [collaborator, setCollaborator] = useState("");
   const [collaborators, setCollaborators] = useState([]);
-  const [taskCreated, setTaskCreated] = useState(false);
 
   const dispatch = useDispatch();
   const { success, error } = useSelector((state) => state.task);
-  const { users, user: sliceUser } = useSelector((state) => state.user);
-
-  console.log(users);
+  const { users } = useSelector((state) => state.user);
+  const { user: sliceUser } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,29 +48,26 @@ const CreateTask = () => {
   };
 
   const minDate = new Date().toISOString().split("T")[0];
-  //console.log(new Date("2024-05-02").toISOString());
 
   const navigate = useNavigate();
 
   const addCollaborator = (e) => {
     e.preventDefault();
 
-    const userExists = collaborators.filter((elem) => {
-      return elem.email === collaborator;
+    const userExists = collaborators.filter((_collaborator) => {
+      return _collaborator.email === collaborator;
     });
 
     if (userExists.length !== 0) return;
 
     const _collaborator = users.filter((user) => {
-      return user.email === collaborator && sliceUser._id !== user._id;
+      return user.email === collaborator && sliceUser.userId !== user._id;
     });
 
     if (_collaborator.length === 0) return;
 
     setCollaborators((prev) => [...prev, ..._collaborator]);
   };
-
-  console.log(collaborators);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -86,56 +79,40 @@ const CreateTask = () => {
         <div className="creation-form">
           <h2>Criar Tarefa</h2>
           <form onSubmit={handleSubmit}>
-            <div>
-              <label>
-                <span>Nome</span>
-                <input
-                  type="text"
-                  onChange={({ target }) => setName(target.value)}
-                  value={name || ""}
-                />
-              </label>
-              <label>
-                <span>Prioridade</span>
-                <select
-                  name=""
-                  id=""
-                  onChange={({ target }) => setPriority(target.value)}
-                  value={priority || ""}
-                >
-                  <option value="">Qual ?</option>
-                  <option value="Alta">Alta</option>
-                  <option value="Média">Média</option>
-                  <option value="Baixa">Baixa</option>
-                </select>
-              </label>
-            </div>
+            <label>
+              <span>Nome</span>
+              <input
+                type="text"
+                onChange={({ target }) => setName(target.value)}
+                value={name || ""}
+              />
+            </label>
 
             <div>
               <div>
-                <div>
-                  <label>
-                    <span>Pesquise por Colaborador(es/as)</span>
-                    <input
-                      type="search"
-                      name=""
-                      id=""
-                      onChange={({ target }) => {
-                        setCollaborator(target.value);
-                      }}
-                      value={collaborator || ""}
-                      placeholder="Pesquisa pelo e-mail do usuário."
-                    />
-                  </label>
-                  <Button type="neutral950" onClick={addCollaborator}>
-                    Adicionar
-                  </Button>
-                </div>
-
                 <label>
-                  {/* <span>Veja seus colaborador(es/as)</span> */}
+                  <span>Pesquise por Colaborador(es/as)</span>
+                  <input
+                    type="search"
+                    name=""
+                    id=""
+                    onChange={({ target }) => {
+                      setCollaborator(target.value);
+                    }}
+                    value={collaborator || ""}
+                    placeholder="Pesquisa pelo e-mail do usuário."
+                  />
+                </label>
+                <Button type="neutral950" onClick={addCollaborator}>
+                  Adicionar
+                </Button>
+              </div>
+              {collaborators.length > 0 && (
+                <label>
                   <select name="" id="">
-                    <option value="">Seus colaborador(es/as)</option>
+                    <option value="" disabled>
+                      Seu(s) colaborador(es)
+                    </option>
                     {collaborators &&
                       collaborators.map((collaborator) => (
                         <option
@@ -148,7 +125,23 @@ const CreateTask = () => {
                       ))}
                   </select>
                 </label>
-              </div>
+              )}
+            </div>
+
+            <div>
+              <label>
+                <span>Prioridade</span>
+                <select
+                  name=""
+                  id=""
+                  onChange={({ target }) => setPriority(target.value)}
+                  value={priority || ""}
+                >
+                  <option value="alta">Alta</option>
+                  <option value="média">Média</option>
+                  <option value="baixa">Baixa</option>
+                </select>
+              </label>
               <label>
                 <span>Prazo de Entrega</span>
                 <input
@@ -188,7 +181,7 @@ const CreateTask = () => {
                 sliceType="task"
               />
             )}
-            <div className="btns">
+            <div className="buttons">
               <input
                 type="button"
                 value="Voltar"

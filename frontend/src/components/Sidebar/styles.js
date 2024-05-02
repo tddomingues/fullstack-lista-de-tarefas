@@ -30,7 +30,7 @@ export const Header = styled.header`
 
         > li {
           transition: 0.5s all ease;
-          padding: 0.5rem 1rem;
+
           border-radius: 0.5rem;
           font-size: ${({ theme }) => theme.fontSize.md};
           font-weight: 500;
@@ -38,6 +38,7 @@ export const Header = styled.header`
 
           > a {
             display: flex;
+            padding: 0.5rem 1rem;
             align-items: center;
             justify-content: center;
             gap: 0.25rem;

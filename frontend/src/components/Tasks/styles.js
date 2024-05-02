@@ -5,7 +5,7 @@ export const PriorityStyles = styled.td`
     background-color: ${(props) =>
       props.priority === "baixa"
         ? props.theme.colors.blue
-        : props.priority === "media"
+        : props.priority === "média"
           ? props.theme.colors.yellow
           : props.theme.colors.red};
     padding: 0.25rem;

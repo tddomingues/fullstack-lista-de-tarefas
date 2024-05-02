@@ -35,6 +35,14 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
+              <Link to={`/collaboration`}>
+                <span>
+                  <LuUser2 />
+                </span>
+                <span>Colaborações</span>
+              </Link>
+            </li>
+            <li>
               <Link to={`/profile/${user.userId}`}>
                 <span>
                   <LuUser2 />

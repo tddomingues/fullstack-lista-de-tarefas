@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Auth from "./pages/Auth/Auth";
 import { useSelector } from "react-redux";
 import CreateTask from "./pages/Main/CreateTask/CreateTask";
+import Collaboration from "./pages/Main/Collaboration/Collaboration";
+import Project from "./pages/Main/Project/Project";
 
 const AppRoutes = () => {
   const { user } = useSelector((state) => state.auth);
@@ -27,6 +29,8 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/new-task" element={<CreateTask />} />
+        <Route path="/collaboration" element={<Collaboration />} />
+        <Route path="/project/:id" element={<Project />} />
       </Route>
 
       <Route path="/auth" element={<Auth />}>
