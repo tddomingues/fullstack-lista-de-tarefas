@@ -1,4 +1,4 @@
-const yup = require("yup")
+const yup = require("yup");
 
 const registerValidation = yup.object({
   body: yup.object({
@@ -18,9 +18,9 @@ const registerValidation = yup.object({
       .string()
       .required("A senha é obrigatória.")
       .min(3, "Senha curta.")
-      .oneOf([yup.ref("password"), null], "Senhas não correspondentes!.")
-  })
-})
+      .oneOf([yup.ref("password"), null], "Senhas não correspondentes!."),
+  }),
+});
 
 const loginValidation = yup.object({
   body: yup.object({
@@ -32,8 +32,8 @@ const loginValidation = yup.object({
       .string()
       .required("A senha é obrigatória.")
       .min(3, "O senha deve conter mais de 3 caracteres."),
-  })
-})
+  }),
+});
 
 const updateValidation = yup.object({
   body: yup.object({
@@ -49,8 +49,8 @@ const updateValidation = yup.object({
       .string()
       .required("A senha é obrigatória.")
       .min(3, "Senha curta.")
-      .oneOf([yup.ref("password"), null], "Senhas não correspondentes!.")
-  })
-})
+      .oneOf([yup.ref("password"), null], "Senhas não correspondentes!."),
+  }),
+});
 
-module.exports = { registerValidation, loginValidation, updateValidation }
+module.exports = { registerValidation, loginValidation, updateValidation };

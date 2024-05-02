@@ -1,74 +1,64 @@
-require("dotenv").config()
-const User = require("../models/user")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+require("dotenv").config();
+const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 const updateUser = async (req, res) => {
-
-  const { email, name, password, confirmPassword } = req.body
+  const { email, name, password, confirmPassword } = req.body;
 
   try {
-
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ error: "Usuário não cadastrado." })
+      return res.status(400).json({ error: "Usuário não cadastrado." });
     }
 
-    if (password !== confirmPassword) return res.status(400).json({ error: "Senhas não correspondentes." })
+    if (password !== confirmPassword)
+      return res.status(400).json({ error: "Senhas não correspondentes." });
 
-    let cryptoPassword
+    let cryptoPassword;
 
     if (password) {
-      cryptoPassword = await bcrypt.hash(password, 10)
+      cryptoPassword = await bcrypt.hash(password, 10);
     }
 
     const newUser = {
       name: name || user.name,
       email: email,
-      password: cryptoPassword || user.password
-    }
+      password: cryptoPassword || user.password,
+    };
 
-    await user.updateOne(newUser)
-    await user.save()
+    await user.updateOne(newUser);
+    await user.save();
 
-    return res.status(200).json({ message: "Conta atualizada com sucesso." })
-
+    return res.status(200).json({ message: "Conta atualizada com sucesso." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro na atualização do usuário." })
+    return res.status(400).json({ error: "Erro na atualização do usuário." });
   }
-
-}
+};
 
 const getUser = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
-    const user = await User.findById({ _id: id })
+    const user = await User.findById({ _id: id });
 
-    if (!user) return res.status(400).json({ error: "Usuário não encontrado." })
+    if (!user)
+      return res.status(400).json({ error: "Usuário não encontrado." });
 
-    return res.status(200).json({ user })
+    return res.status(200).json({ user });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao encontrar o usuário." })
+    return res.status(400).json({ error: "Erro ao encontrar o usuário." });
   }
-}
+};
 
 const getUsers = async (req, res) => {
-
   try {
+    const users = await User.find();
 
-    const users = await User.find()
-
-    return res.status(200).json({ users })
-    
+    return res.status(200).json({ users });
   } catch (error) {
-    return res.status(400).json({error: "Erro ao encontrar os usuários."})
+    return res.status(400).json({ error: "Erro ao encontrar os usuários." });
   }
+};
 
-}
-
-
-module.exports = { updateUser, getUser, getUsers }
-
-
+module.exports = { updateUser, getUser, getUsers };

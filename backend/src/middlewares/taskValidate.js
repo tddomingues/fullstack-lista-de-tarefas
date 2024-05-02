@@ -1,4 +1,4 @@
-const yup = require("yup")
+const yup = require("yup");
 
 const taskValidate = yup.object({
   body: yup.object({
@@ -10,10 +10,8 @@ const taskValidate = yup.object({
       .string()
       .required("Informe explicações sobre o projeto.")
       .min(3, "Informações é muito curta."),
-    priority: yup
-      .string()
-      .required("Escolha uma prioridade")
-  })
-})
+    priority: yup.string().required("Escolha uma prioridade"),
+  }),
+});
 
-module.exports = {taskValidate}
+module.exports = { taskValidate };
