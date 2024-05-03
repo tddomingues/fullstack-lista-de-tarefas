@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 //styles
 import { SectionStyles } from "./styles";
-import { LuSearch } from "react-icons/lu";
+import { LuSearch, LuPlus } from "react-icons/lu";
 
 //components
 import { Button } from "../../../components/ui/Button";
@@ -34,7 +34,7 @@ const Home = () => {
     <SectionStyles>
       <div>
         <Button type="purple" onClick={() => navigate("/new-task")}>
-          Criar Tarefa
+          <LuPlus />
         </Button>
         <div>
           <input type="text" name="" id="" placeholder="Busque uma tarefa" />
@@ -42,7 +42,12 @@ const Home = () => {
         </div>
       </div>
       {tasks.length !== 0 ? (
-        <Tasks tasks={tasks} error={error} loading={loading} />
+        <Tasks
+          tasks={tasks}
+          error={error}
+          loading={loading}
+          title="Suas Atividades"
+        />
       ) : (
         <div className="no-tasks">
           <p>Você não possui tarefas.</p>

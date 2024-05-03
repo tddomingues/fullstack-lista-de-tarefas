@@ -1,5 +1,6 @@
 import { Header } from "./styles";
 import { LuHome, LuUser2, LuLogOut } from "react-icons/lu";
+import { GrGroup } from "react-icons/gr";
 
 import { Link } from "react-router-dom";
 import { Button } from "../ui/Button";
@@ -37,7 +38,7 @@ const Navbar = () => {
             <li>
               <Link to={`/collaboration`}>
                 <span>
-                  <LuUser2 />
+                  <GrGroup />
                 </span>
                 <span>Colaborações</span>
               </Link>

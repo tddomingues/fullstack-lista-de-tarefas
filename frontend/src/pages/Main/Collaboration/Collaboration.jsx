@@ -3,6 +3,7 @@ import Tasks from "../../../components/Tasks/Tasks";
 import { SectionStyles } from "./styles";
 import { useEffect } from "react";
 import { getTasksDoneCollaboratively } from "../../../slices/taskSlice";
+import Loading from "../../../components/Loading/Loading";
 
 const Collaboration = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const Collaboration = () => {
   useEffect(() => {
     dispatch(getTasksDoneCollaboratively());
   }, [dispatch]);
+
+  if (loading) return <Loading />;
   return (
     <SectionStyles>
       {tasks?.length !== 0 ? (
@@ -21,7 +24,7 @@ const Collaboration = () => {
           tasks={tasks}
           error={error}
           loading={loading}
-          title="Atividades que você está ajudando"
+          title="Suas Tarefas Em Colaboração"
         />
       ) : (
         <div className="no-collaboration">

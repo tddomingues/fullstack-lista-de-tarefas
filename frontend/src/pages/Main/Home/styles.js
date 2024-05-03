@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
 export const SectionStyles = styled.section`
-  padding: 1rem 0rem;
+  padding: 2rem 0rem;
 
   > div:nth-child(1) {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
+
+    > button {
+      > svg {
+        margin-top: 0px;
+      }
+    }
 
     > div {
       position: relative;

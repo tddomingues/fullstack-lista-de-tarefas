@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "../ui/Button";
 import { Container } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 const MessageSuccess = ({ text, type }) => {
+  const navigate = useNavigate();
   return (
     <Container>
       {type === "task" ? (
@@ -13,11 +15,16 @@ const MessageSuccess = ({ text, type }) => {
         <h2>Atualizada com sucesso.</h2>
       )}
 
-      <div className="btns">
+      <div className="buttons">
         {type === "task" ? (
-          <Button type="neutral50" onClick={() => window.location.reload()}>
-            Criar Nova Tarefa
-          </Button>
+          <div>
+            <Button type="neutral50" onClick={() => navigate("/")}>
+              Voltar
+            </Button>
+            <Button type="neutral50" onClick={() => window.location.reload()}>
+              Criar Nova Tarefa
+            </Button>
+          </div>
         ) : type === "profile" ? (
           <Button type="neutral50" onClick={() => window.location.reload()}>
             Voltar

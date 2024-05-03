@@ -13,12 +13,14 @@ export const Container = styled.div`
     font-weight: 500;
   }
 
-  > .btns {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    > button {
+  > .buttons {
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    button {
       color: ${({ theme }) => theme.colors.neutral950};
     }
   }

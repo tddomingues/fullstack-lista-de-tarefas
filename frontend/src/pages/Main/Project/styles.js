@@ -95,8 +95,13 @@ export const ProfileStyles = styled.section`
       }
     }
 
-    > button {
-      margin-top: 1rem;
+    .buttons {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      > button {
+        margin-top: 1rem;
+      }
     }
   }
 

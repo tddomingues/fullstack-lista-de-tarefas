@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SectionStyles = styled.section`
-  padding: 1rem 0rem;
+  padding: 2rem 0rem;
 
   > .no-collaboration {
     background-color: ${({ theme }) => theme.colors.neutral300};

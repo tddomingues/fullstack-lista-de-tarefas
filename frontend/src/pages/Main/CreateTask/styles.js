@@ -30,6 +30,10 @@ export const TaskStyles = styled.section`
           display: flex;
           align-items: end;
           gap: 0.25rem;
+
+          svg {
+            margin-top: 0;
+          }
         }
       }
 

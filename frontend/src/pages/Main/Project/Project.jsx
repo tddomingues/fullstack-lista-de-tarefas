@@ -3,7 +3,7 @@ import { Button } from "../../../components/ui/Button";
 import { ProfileStyles } from "./styles";
 import { useEffect } from "react";
 import { getTask } from "../../../slices/taskSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "../../../assets/perfil.jpg";
 
 //conversor de horas
@@ -13,6 +13,8 @@ import Loading from "../../../components/Loading/Loading";
 
 const Project = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -96,7 +98,12 @@ const Project = () => {
             </div>
           </div>
         </form>
-        <Button type="purple">Alterar Dados</Button>
+        <div className="buttons">
+          <Button type="purple" onClick={() => navigate("/")}>
+            Voltar
+          </Button>
+          <Button type="purple">Alterar Dados</Button>
+        </div>
       </div>
     </ProfileStyles>
   );

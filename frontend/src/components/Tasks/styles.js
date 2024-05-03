@@ -51,6 +51,10 @@ export const TasksStyles = styled.div`
           text-align: start;
           font-weight: 400;
           font-size: ${({ theme }) => theme.fontSize.md};
+
+          > svg {
+            font-size: ${({ theme }) => theme.fontSize.lg};
+          }
         }
       }
     }

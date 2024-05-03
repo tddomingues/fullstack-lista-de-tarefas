@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { TaskStyles } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineGroupAdd } from "react-icons/md";
 
-import { createTask } from "../../../slices/taskSlice";
+import { createTask, reset } from "../../../slices/taskSlice";
 import Message from "../../../components/MessageError/MessageError";
 import { Button } from "../../../components/ui/Button";
 import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
@@ -71,6 +72,7 @@ const CreateTask = () => {
 
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(reset());
   }, [dispatch]);
 
   return (
@@ -104,7 +106,7 @@ const CreateTask = () => {
                   />
                 </label>
                 <Button type="neutral950" onClick={addCollaborator}>
-                  Adicionar
+                  <MdOutlineGroupAdd />
                 </Button>
               </div>
               {collaborators.length > 0 && (
@@ -171,13 +173,6 @@ const CreateTask = () => {
               <Message
                 message={error}
                 classType="error-message"
-                sliceType="task"
-              />
-            )}
-            {success && (
-              <Message
-                message={success}
-                classType="sucess-message"
                 sliceType="task"
               />
             )}
