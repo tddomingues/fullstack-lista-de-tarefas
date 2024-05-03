@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const TaskStyles = styled.section`
+export const UpdateStyles = styled.section`
   padding: 2rem 0rem;
   border-radius: 0.5rem;
 
-  > .creation-form {
+  > .update-form {
     background-color: ${({ theme }) => theme.colors.neutral300};
     border-radius: 0.5rem;
     padding: 1rem;

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { taskService } from "../service/taskService";
+import { authService } from "../service/authService";
 
 const initialState = {
   tasks: [],
@@ -19,6 +20,18 @@ export const createTask = createAsyncThunk(
     if (res.error) {
       return thunkAPI.rejectWithValue(res);
     }
+
+    return res;
+  },
+);
+
+export const updateTask = createAsyncThunk(
+  "task/updateTask",
+  async ({ data, id }, thunkAPI) => {
+    const { user } = thunkAPI.getState().auth;
+    const res = await taskService.updateTask(data, id, user);
+
+    if (res.error) return thunkAPI.rejectWithValue(res);
 
     return res;
   },
@@ -58,12 +71,10 @@ export const getTasksDoneCollaboratively = createAsyncThunk(
   "task/getTasksDoneCollaboratively",
   async (_, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
-    console.log("user ", user);
+
     const res = await taskService.getTasksDoneCollaboratively(user);
 
     if (res.error) return thunkAPI.rejectWithValue(res);
-
-    console.log("taskslice ", res);
 
     return res;
   },
@@ -86,10 +97,12 @@ const taskSlice = createSlice({
       .addCase(createTask.fulfilled, (state, action) => {
         state.loading = false;
         state.success = action.payload.message;
+        state.success = true;
       })
       .addCase(createTask.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
+        state.success = false;
       })
       .addCase(tasksByUser.pending, (state, action) => {
         state.loading = true;
@@ -107,12 +120,10 @@ const taskSlice = createSlice({
       })
       .addCase(getTask.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.task = action.payload;
       })
       .addCase(getTask.rejected, (state, action) => {
         state.loading = false;
-        state.success = false;
         state.error = action.payload.error;
         state.task = {};
       })
@@ -121,14 +132,26 @@ const taskSlice = createSlice({
       })
       .addCase(getTasksDoneCollaboratively.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.tasks = action.payload;
       })
       .addCase(getTasksDoneCollaboratively.rejected, (state, action) => {
         state.loading = false;
-        state.success = false;
         state.error = action.payload.error;
         state.tasks = [];
+      })
+      .addCase(updateTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.task = action.payload;
+      })
+      .addCase(updateTask.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = action.payload.error;
+        state.task = {};
       });
   },
 });

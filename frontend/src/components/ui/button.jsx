@@ -17,4 +17,9 @@ export const Button = styled.button`
     font-size: ${({ theme }) => theme.fontSize.base};
     margin-top: 3px;
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;

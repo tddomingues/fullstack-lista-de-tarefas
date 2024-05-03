@@ -19,6 +19,39 @@ const createTask = async (req, res) => {
   }
 };
 
+const updateTask = async (req, res) => {
+  const { name, project, priority, userId, ownerId, deadline, collaborators } =
+    req.body;
+
+  const { id } = req.params;
+
+  try {
+    console.log(userId, req.userId);
+    if (userId !== ownerId) {
+      return res
+        .status(400)
+        .json({ error: "Essa tarefa não corresponde ao criador." });
+    }
+
+    const task = await Task.findOne({ _id: id });
+
+    const newTask = {
+      name: name || task.name,
+      project: project || task.project,
+      priority: priority || task.priority,
+      deadline: deadline || task.deadline,
+      collaborators: collaborators || task.collaborators,
+    };
+
+    await task.updateOne(newTask);
+    await task.save();
+
+    return res.status(200).json(task);
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao atualizar a tarefa." });
+  }
+};
+
 const getTasksByUser = async (req, res) => {
   try {
     const tasks = await Task.find({ userId: req.userId })
@@ -79,4 +112,5 @@ module.exports = {
   getTasksByUser,
   getTask,
   getTasksDoneCollaboratively,
+  updateTask,
 };

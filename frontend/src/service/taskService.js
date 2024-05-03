@@ -12,6 +12,17 @@ const postCreateTask = async (data, user) => {
   return res;
 };
 
+const updateTask = async (data, id, user) => {
+  const res = await fetch(
+    url + "/updatetask/" + id,
+    fetchConfig("PUT", data, user.token),
+  )
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return res;
+};
+
 const getTasksByUser = async (user) => {
   const res = await fetch(
     url + "/usertasks",
@@ -42,8 +53,6 @@ const getTasksDoneCollaboratively = async (user) => {
     .then((res) => res.json())
     .catch((err) => err);
 
-  console.log(user);
-
   return res;
 };
 
@@ -52,4 +61,5 @@ export const taskService = {
   getTasksByUser,
   getTask,
   getTasksDoneCollaboratively,
+  updateTask,
 };

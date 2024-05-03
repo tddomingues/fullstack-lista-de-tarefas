@@ -23,8 +23,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { tasks, error, loading } = useSelector((state) => state.task);
 
-  console.log(tasks.length === 0);
-
   useEffect(() => {
     dispatch(tasksByUser());
   }, [dispatch]);

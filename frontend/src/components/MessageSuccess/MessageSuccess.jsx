@@ -3,7 +3,7 @@ import { Button } from "../ui/Button";
 import { Container } from "./styles";
 import { useNavigate } from "react-router-dom";
 
-const MessageSuccess = ({ text, type }) => {
+const MessageSuccess = ({ text, type, id }) => {
   const navigate = useNavigate();
   return (
     <Container>
@@ -12,7 +12,7 @@ const MessageSuccess = ({ text, type }) => {
       ) : type === "profile" ? (
         <h2>Parabéns! Conta atualizada com sucesso.</h2>
       ) : (
-        <h2>Atualizada com sucesso.</h2>
+        <h2>Atualizado com sucesso.</h2>
       )}
 
       <div className="buttons">
@@ -30,7 +30,7 @@ const MessageSuccess = ({ text, type }) => {
             Voltar
           </Button>
         ) : (
-          <Button type="neutral50" onClick={() => window.location.reload()}>
+          <Button type="neutral50" onClick={() => navigate(`/project/${id}`)}>
             Voltar
           </Button>
         )}

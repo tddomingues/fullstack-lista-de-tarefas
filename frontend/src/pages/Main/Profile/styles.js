@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ProfileStyles = styled.section`
-  padding: 1rem 0rem;
+  padding: 2rem 0rem;
   border-radius: 0.5rem;
 
   > .info,

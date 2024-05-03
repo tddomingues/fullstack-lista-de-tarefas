@@ -7,6 +7,7 @@ const {
   getTasksByUser,
   getTask,
   getTasksDoneCollaboratively,
+  updateTask,
 } = require("../controllers/taskController");
 const tokenValidate = require("../middlewares/tokenValidate");
 const validate = require("../middlewares/validate");
@@ -18,5 +19,6 @@ router.post("/newTask", tokenValidate, validate(taskValidate), createTask);
 router.get("/usertasks", tokenValidate, getTasksByUser);
 router.get("/task/:id", tokenValidate, getTask);
 router.get("/collaboration", tokenValidate, getTasksDoneCollaboratively);
+router.put("/updatetask/:id", tokenValidate, updateTask);
 
 module.exports = router;

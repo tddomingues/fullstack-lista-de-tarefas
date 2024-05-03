@@ -6,6 +6,7 @@ import "moment/locale/pt-br";
 import { PriorityStyles, TasksStyles } from "./styles";
 import { LuFileInput } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { firstCapitalLetter } from "../../utils/firstCapitalLetter";
 
 const Tasks = ({ tasks, title }) => {
   console.log("tasks ", tasks);
@@ -34,7 +35,7 @@ const Tasks = ({ tasks, title }) => {
                   <LuFileInput style={{ cursor: "pointer" }} />
                 </td>
                 <PriorityStyles priority={task.priority.toLowerCase()}>
-                  <span>{task.priority}</span>
+                  <span>{firstCapitalLetter(task.priority)}</span>
                 </PriorityStyles>
               </tr>
             ))}

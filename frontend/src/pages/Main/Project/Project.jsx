@@ -1,24 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../../components/ui/Button";
+import { useEffect, useState } from "react";
+
+//styles
 import { ProfileStyles } from "./styles";
-import { useEffect } from "react";
-import { getTask } from "../../../slices/taskSlice";
-import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "../../../assets/perfil.jpg";
+
+//router
+import { useNavigate, useParams } from "react-router-dom";
 
 //conversor de horas
 import moment from "moment";
 import "moment/locale/pt-br";
+
+//redux
+import { getTask } from "../../../slices/taskSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+//components
 import Loading from "../../../components/Loading/Loading";
+import { Button } from "../../../components/ui/Button";
 
 const Project = () => {
-  const { id } = useParams();
-
-  const navigate = useNavigate();
-
+  //redux
   const dispatch = useDispatch();
-
   const { task, loading } = useSelector((state) => state.task);
+  const { user } = useSelector((state) => state.auth);
+
+  //router
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getTask(id));
@@ -102,7 +111,13 @@ const Project = () => {
           <Button type="purple" onClick={() => navigate("/")}>
             Voltar
           </Button>
-          <Button type="purple">Alterar Dados</Button>
+          <Button
+            type="purple"
+            onClick={() => navigate(`/updateTask/${id}`)}
+            disabled={task.userId !== user.userId ? true : false}
+          >
+            Alterar Dados
+          </Button>
         </div>
       </div>
     </ProfileStyles>

@@ -10,8 +10,6 @@ const Collaboration = () => {
 
   const { tasks, error, loading } = useSelector((state) => state.task);
 
-  console.log(tasks);
-
   useEffect(() => {
     dispatch(getTasksDoneCollaboratively());
   }, [dispatch]);
