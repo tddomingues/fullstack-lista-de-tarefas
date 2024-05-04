@@ -71,16 +71,29 @@ const getTask = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const task = await Task.findById(id).populate(
-      "collaborators",
-      "name email",
-    );
+    const task = await Task.findById(id)
+      .populate("collaborators", "name email")
+      .populate("userId", "name email");
 
     if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
 
     return res.status(200).json(task);
   } catch (error) {
     return res.status(400).json({ error: "Erro não procurar a tarefa." });
+  }
+};
+
+const deleteTask = async (req, res) => {
+  const { id } = req.params;
+
+  console.log(id);
+
+  try {
+    await Task.deleteOne({ _id: id });
+
+    return res.status(200).json({ message: "Tarefa apagada com sucesso." });
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao deletar a tarefa." });
   }
 };
 
@@ -113,4 +126,5 @@ module.exports = {
   getTask,
   getTasksDoneCollaboratively,
   updateTask,
+  deleteTask,
 };

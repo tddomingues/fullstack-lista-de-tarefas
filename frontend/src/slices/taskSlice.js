@@ -80,6 +80,18 @@ export const getTasksDoneCollaboratively = createAsyncThunk(
   },
 );
 
+export const deleteTask = createAsyncThunk(
+  "task/deleteTask",
+  async (id, thunkAPI) => {
+    const { user } = thunkAPI.getState().auth;
+    const res = await taskService.deleteTask(id, user);
+
+    if (res.error) return thunkAPI.rejectWithValue(res);
+
+    return res;
+  },
+);
+
 const taskSlice = createSlice({
   name: "task",
   initialState,
@@ -152,6 +164,16 @@ const taskSlice = createSlice({
         state.success = false;
         state.error = action.payload.error;
         state.task = {};
+      })
+      .addCase(deleteTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
       });
   },
 });

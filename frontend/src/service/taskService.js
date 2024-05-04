@@ -56,10 +56,22 @@ const getTasksDoneCollaboratively = async (user) => {
   return res;
 };
 
+const deleteTask = async (id, user) => {
+  const res = await fetch(
+    url + "/deleteTask/" + id,
+    fetchConfig("DELETE", null, user.token),
+  )
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return res;
+};
+
 export const taskService = {
   postCreateTask,
   getTasksByUser,
   getTask,
   getTasksDoneCollaboratively,
   updateTask,
+  deleteTask,
 };

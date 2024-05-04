@@ -56,6 +56,49 @@ export const TasksStyles = styled.div`
             font-size: ${({ theme }) => theme.fontSize.lg};
           }
         }
+
+        > .buttons {
+          display: flex;
+          width: 100%;
+          justify-content: end;
+          gap: 1rem;
+
+          > button {
+            > svg {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  > .confirm-deletion {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: ${({ theme }) => theme.colors.neutral950_transparent};
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    > div {
+      background-color: ${({ theme }) => theme.colors.neutral300};
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      width: 300px;
+      > h3 {
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: ${({ theme }) => theme.fontSize.lg};
+        font-weight: 500;
+      }
+
+      > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: end;
       }
     }
   }

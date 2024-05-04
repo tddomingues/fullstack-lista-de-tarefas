@@ -44,7 +44,7 @@ const UpdateTask = () => {
       project,
       priority,
       userId: sliceUser.userId,
-      ownerId: task.userId,
+      ownerId: task.userId?._id,
       deadline,
       collaborators: filteredCollaboratorKeys,
     };

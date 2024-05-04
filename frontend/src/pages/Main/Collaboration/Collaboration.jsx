@@ -15,6 +15,7 @@ const Collaboration = () => {
   }, [dispatch]);
 
   if (loading) return <Loading />;
+
   return (
     <SectionStyles>
       {tasks?.length !== 0 ? (

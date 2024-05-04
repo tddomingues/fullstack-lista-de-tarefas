@@ -7,10 +7,13 @@ const register = async (req, res) => {
   const { email, name, password, confirmPassword } = req.body;
 
   try {
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({
+      $or: [{ email: { $eq: email } }, { name: { $eq: name } }],
+    });
+    console.log(userExists);
 
     if (userExists) {
-      return res.status(400).json({ error: "Usuário existente." });
+      return res.status(400).json({ error: "Usuário/E-mail existente." });
     }
 
     if (password !== confirmPassword)

@@ -13,6 +13,7 @@ export const SectionStyles = styled.section`
     > button {
       > svg {
         margin-top: 0px;
+        color: ${({ theme }) => theme.colors.neutral50};
       }
     }
 

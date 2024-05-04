@@ -32,6 +32,7 @@ export const theme = {
     neutral800: "#262626",
     neutral900: "#171717",
     neutral950: "#0a0a0a",
+    neutral950_transparent: "#0a0a0a79",
     primary: " #5471F1 ",
   },
   fontFamily: {
