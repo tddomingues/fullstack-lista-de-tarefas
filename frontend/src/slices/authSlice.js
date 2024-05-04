@@ -4,8 +4,6 @@ import { authService } from "../service/authService";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-console.log("user ", user);
-
 const initialState = {
   //armazena um objeto '{userId, token}' no momento do login ou registro
   user: user ? user : null,

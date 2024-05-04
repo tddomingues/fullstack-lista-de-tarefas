@@ -14,17 +14,14 @@ import { Button } from "../ui/Button";
 import { useState } from "react";
 import { deleteTask } from "../../slices/taskSlice";
 
-const Tasks = ({ tasks, title }) => {
+const Tasks = ({ tasks, title, user }) => {
   const navigate = useNavigate();
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [taskId, setTaskId] = useState(null);
 
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
-
   const handleDeleteTask = (id) => {
-    console.log(id);
     dispatch(deleteTask(id));
 
     window.location.reload();

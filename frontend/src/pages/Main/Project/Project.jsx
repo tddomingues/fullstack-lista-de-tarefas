@@ -5,7 +5,7 @@ import { ProfileStyles } from "./styles";
 import Avatar from "../../../assets/perfil.jpg";
 
 //router
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 //conversor de horas
 import moment from "moment";
@@ -20,18 +20,20 @@ import Loading from "../../../components/Loading/Loading";
 import { Button } from "../../../components/ui/Button";
 
 const Project = () => {
-  //redux
   const dispatch = useDispatch();
+
   const { task, loading } = useSelector((state) => state.task);
-  const { user } = useSelector((state) => state.auth);
-  console.log(user);
-  //router
+
+  const [user] = useOutletContext();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getTask(id));
   }, [dispatch, id]);
+
+  if (user === null) return window.location.reload();
 
   if (loading) return <Loading />;
 

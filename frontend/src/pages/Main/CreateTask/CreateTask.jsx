@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 
+//styles
 import { TaskStyles } from "./styles";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { MdOutlineGroupAdd } from "react-icons/md";
 
-import { createTask, reset } from "../../../slices/taskSlice";
-import Message from "../../../components/MessageError/MessageError";
-import { Button } from "../../../components/ui/Button";
-import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
+//router
+import { useNavigate, useOutletContext } from "react-router-dom";
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../slices/userSlice";
+import { createTask, reset } from "../../../slices/taskSlice";
+
+//components
+import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
+import Message from "../../../components/MessageError/MessageError";
+import AddColaborator from "../../../components/AddColaborator/AddColaborator";
 
 const CreateTask = () => {
   const [name, setName] = useState("");
@@ -22,13 +27,18 @@ const CreateTask = () => {
   const [collaborators, setCollaborators] = useState([]);
 
   const dispatch = useDispatch();
+
   const { success, error } = useSelector((state) => state.task);
   const { users } = useSelector((state) => state.user);
-  const { user: sliceUser } = useSelector((state) => state.auth);
+
+  const [user] = useOutletContext();
+
+  const minDate = new Date().toISOString().split("T")[0];
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = JSON.parse(localStorage.getItem("user"));
 
     const filteredCollaboratorKeys = collaborators.map((elem) => {
       return { _id: elem._id };
@@ -43,37 +53,15 @@ const CreateTask = () => {
       collaborators: filteredCollaboratorKeys,
     };
 
-    console.log(data);
-
     dispatch(createTask(data));
-  };
-
-  const minDate = new Date().toISOString().split("T")[0];
-
-  const navigate = useNavigate();
-
-  const addCollaborator = (e) => {
-    e.preventDefault();
-
-    const userExists = collaborators.filter((_collaborator) => {
-      return _collaborator.email === collaborator;
-    });
-
-    if (userExists.length !== 0) return;
-
-    const _collaborator = users.filter((user) => {
-      return user.email === collaborator && sliceUser.userId !== user._id;
-    });
-
-    if (_collaborator.length === 0) return;
-
-    setCollaborators((prev) => [...prev, ..._collaborator]);
   };
 
   useEffect(() => {
     dispatch(getUsers());
     dispatch(reset());
   }, [dispatch]);
+
+  if (user === null) return window.location.reload();
 
   return (
     <TaskStyles>
@@ -105,9 +93,13 @@ const CreateTask = () => {
                     placeholder="Pesquisa pelo e-mail do usuário."
                   />
                 </label>
-                <Button type="neutral950" onClick={addCollaborator}>
-                  <MdOutlineGroupAdd />
-                </Button>
+                <AddColaborator
+                  user={user}
+                  users={users}
+                  setCollaborators={setCollaborators}
+                  collaborators={collaborators}
+                  collaborator={collaborator}
+                />
               </div>
               {collaborators.length > 0 && (
                 <label>

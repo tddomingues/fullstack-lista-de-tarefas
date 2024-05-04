@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 //router
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 //styles
 import { SectionStyles } from "./styles";
@@ -14,7 +14,6 @@ import Loading from "../../../components/Loading/Loading";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-
 import { tasksByUser } from "../../../slices/taskSlice";
 
 const Home = () => {
@@ -23,11 +22,16 @@ const Home = () => {
   const dispatch = useDispatch();
   const { tasks, error, loading } = useSelector((state) => state.task);
 
+  const [user] = useOutletContext();
+
   useEffect(() => {
     dispatch(tasksByUser());
   }, [dispatch]);
 
+  if (user === null) return window.location.reload();
+
   if (loading) return <Loading />;
+
   return (
     <SectionStyles>
       <div>
@@ -45,6 +49,7 @@ const Home = () => {
           error={error}
           loading={loading}
           title="Suas Atividades"
+          user={user}
         />
       ) : (
         <div className="no-tasks">

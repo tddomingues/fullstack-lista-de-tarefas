@@ -14,7 +14,7 @@ import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
 import Loading from "../../../components/Loading/Loading";
 
 //router
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -26,14 +26,21 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
-  const { user, error, message, loading } = useSelector((state) => state.user);
+  const {
+    user: userSlice,
+    error,
+    message,
+    loading,
+  } = useSelector((state) => state.user);
+
+  const [user] = useOutletContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
       name: name,
-      email: user.email,
+      email: userSlice.email,
       confirmPassword: confirmPassword,
       password: password,
     };
@@ -45,6 +52,8 @@ const Profile = () => {
     dispatch(getUser(id));
   }, [dispatch, id]);
 
+  if (user === null) return window.location.reload();
+
   if (loading) return <Loading />;
 
   return (
@@ -55,11 +64,11 @@ const Profile = () => {
           <form>
             <label>
               <span>Email</span>
-              <input type="email" value={user.email || ""} disabled />
+              <input type="email" value={userSlice.email || ""} disabled />
             </label>
             <label>
               <span>Nome</span>
-              <input type="text" value={user.name || ""} disabled />
+              <input type="text" value={userSlice.name || ""} disabled />
             </label>
           </form>
           <Button type="purple" onClick={() => setUpdateData(!updateData)}>
