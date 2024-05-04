@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 //styles
 import { TaskStyles } from "./styles";
+import Perfil from "../../../assets/perfil.jpg";
+import { MdOutlineClear } from "react-icons/md";
 
 //router
 import { useNavigate, useOutletContext } from "react-router-dom";
@@ -23,6 +25,7 @@ const CreateTask = () => {
   );
   const [project, setProject] = useState("");
   const [priority, setPriority] = useState("alta");
+  const [status, setStatus] = useState("Em Progresso");
   const [collaborator, setCollaborator] = useState("");
   const [collaborators, setCollaborators] = useState([]);
 
@@ -48,12 +51,22 @@ const CreateTask = () => {
       name,
       project,
       priority,
+      status,
       userId: user.userId,
       deadline,
       collaborators: filteredCollaboratorKeys,
     };
+    console.log(data);
 
     dispatch(createTask(data));
+  };
+
+  const handleDeleteCollaborator = (id) => {
+    const newCollaborators = collaborators.filter((_collaborator) => {
+      return _collaborator._id !== id;
+    });
+
+    setCollaborators(newCollaborators);
   };
 
   useEffect(() => {
@@ -102,23 +115,22 @@ const CreateTask = () => {
                 />
               </div>
               {collaborators.length > 0 && (
-                <label>
-                  <select name="" id="">
-                    <option value="" disabled>
-                      Seu(s) colaborador(es)
-                    </option>
-                    {collaborators &&
-                      collaborators.map((collaborator) => (
-                        <option
-                          value={collaborator._id}
-                          disabled
-                          key={collaborator._id}
-                        >
-                          {`${collaborator.name} (${collaborator.email})`}
-                        </option>
-                      ))}
-                  </select>
-                </label>
+                <div className="collaborators">
+                  {collaborators.map((collaborator) => (
+                    <div key={collaborator._id}>
+                      <img src={Perfil} alt="" />
+                      <span>
+                        <h4>{collaborator.name}</h4>
+                        <p>{collaborator.email}</p>
+                      </span>
+                      <MdOutlineClear
+                        onClick={() =>
+                          handleDeleteCollaborator(collaborator._id)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
 
@@ -136,18 +148,34 @@ const CreateTask = () => {
                   <option value="baixa">Baixa</option>
                 </select>
               </label>
+
               <label>
-                <span>Prazo de Entrega</span>
-                <input
-                  type="date"
+                <span>Status</span>
+                <select
                   name=""
                   id=""
-                  min={minDate}
-                  onChange={({ target }) => setDeadline(target.value)}
-                  value={deadline || minDate}
-                />
+                  onChange={({ target }) => setStatus(target.value)}
+                  value={status || ""}
+                >
+                  <option value="Não Foi Iniciado">Não Foi Iniciado</option>
+                  <option value="Em Progresso">Em Progresso</option>
+                  <option value="Completado">Completado</option>
+                  <option value="Adiado">Adiado</option>
+                </select>
               </label>
             </div>
+
+            <label>
+              <span>Prazo de Entrega</span>
+              <input
+                type="date"
+                name=""
+                id=""
+                min={minDate}
+                onChange={({ target }) => setDeadline(target.value)}
+                value={deadline || minDate}
+              />
+            </label>
 
             <label>
               <span>Projeto</span>

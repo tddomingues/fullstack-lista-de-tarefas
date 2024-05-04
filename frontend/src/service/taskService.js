@@ -45,6 +45,17 @@ const getTask = async (id, user) => {
   return res;
 };
 
+const getTaskBySearch = async (search, user) => {
+  const res = await fetch(
+    url + "/searchTask/?search=" + search,
+    fetchConfig("GET", null, user.token),
+  )
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return res;
+};
+
 const getTasksDoneCollaboratively = async (user) => {
   const res = await fetch(
     url + "/collaboration",
@@ -74,4 +85,5 @@ export const taskService = {
   getTasksDoneCollaboratively,
   updateTask,
   deleteTask,
+  getTaskBySearch,
 };

@@ -57,10 +57,10 @@ const Tasks = ({ tasks, title, user }) => {
                 <td>{task.userId.name}</td>
                 <td>{moment(task.deadline).format("DD/MM/YYYY")}</td>
 
-                <PriorityStyles priority={task.priority.toLowerCase()}>
+                <td>
                   <span>{firstCapitalLetter(task.priority)}</span>
-                </PriorityStyles>
-                <td>Em andamento</td>
+                </td>
+                <td>{task.status}</td>
                 <td className="buttons">
                   <Button
                     type="indigo"

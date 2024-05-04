@@ -19,20 +19,61 @@ export const TaskStyles = styled.section`
     > form {
       display: flex;
       flex-direction: column;
+
       gap: 1rem;
 
       > div:nth-child(2) {
         display: flex;
-        align-items: end;
-        gap: 1rem;
+
+        flex-direction: column;
+        gap: 0.5rem;
 
         > div {
           display: flex;
           align-items: end;
+          flex-wrap: wrap;
           gap: 0.25rem;
 
           svg {
             margin-top: 0;
+          }
+        }
+
+        .collaborators {
+          background-color: ${({ theme }) => theme.colors.neutral100};
+          border-radius: 0.5rem;
+          padding: 0.5rem;
+          > div {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background-color: ${({ theme }) => theme.colors.neutral200};
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: ${({ theme }) => theme.colors.neutral950};
+            > img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+            }
+            > span {
+              font-size: ${({ theme }) => theme.fontSize.md};
+              > h4 {
+                font-weight: 400;
+              }
+              > p {
+                color: ${({ theme }) => theme.colors.neutral950};
+                font-weight: 300;
+              }
+            }
+
+            > svg {
+              cursor: pointer;
+              color: ${({ theme }) => theme.colors.red};
+              font-size: ${({ theme }) => theme.fontSize.xl};
+            }
           }
         }
       }

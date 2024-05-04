@@ -60,7 +60,7 @@ const Navbar = () => {
         </nav>
       </div>
       <div className="btn-logout">
-        <Button type="neutral950" onClick={handleLogout}>
+        <Button type="neutral800" onClick={handleLogout}>
           Sair
           <span>
             <LuLogOut />

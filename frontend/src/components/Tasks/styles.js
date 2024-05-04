@@ -90,7 +90,7 @@ export const TasksStyles = styled.div`
         background: ${({ theme }) => theme.colors.neutral50};
         border-bottom: 1px solid ${({ theme }) => theme.colors.neutral400};
         padding: 1rem;
-
+        border-radius: 0.5rem 0.5rem 0 0;
         > h3 {
           text-align: center;
           font-size: ${({ theme }) => theme.fontSize.lg};
@@ -105,6 +105,7 @@ export const TasksStyles = styled.div`
         padding: 0.5rem;
 
         > p {
+          line-height: 1.4;
           text-align: center;
           font-weight: 400;
           font-size: ${({ theme }) => theme.fontSize.md};
@@ -114,7 +115,7 @@ export const TasksStyles = styled.div`
 
       > .buttons {
         background: ${({ theme }) => theme.colors.neutral200};
-
+        border-radius: 0 0 0.5rem 0.5rem;
         padding: 1rem;
         display: flex;
         justify-content: space-between;

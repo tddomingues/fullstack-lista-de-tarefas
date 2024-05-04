@@ -1,13 +1,15 @@
 const Task = require("../models/task");
 
 const createTask = async (req, res) => {
-  const { name, project, priority, userId, deadline, collaborators } = req.body;
+  const { name, project, priority, status, userId, deadline, collaborators } =
+    req.body;
 
   try {
     await Task.create({
       name,
       project,
       priority,
+      status,
       userId,
       deadline,
       collaborators,
@@ -20,8 +22,16 @@ const createTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
-  const { name, project, priority, userId, ownerId, deadline, collaborators } =
-    req.body;
+  const {
+    name,
+    project,
+    priority,
+    status,
+    userId,
+    ownerId,
+    deadline,
+    collaborators,
+  } = req.body;
 
   const { id } = req.params;
 
@@ -39,6 +49,7 @@ const updateTask = async (req, res) => {
       name: name || task.name,
       project: project || task.project,
       priority: priority || task.priority,
+      status: status || task.status,
       deadline: deadline || task.deadline,
       collaborators: collaborators || task.collaborators,
     };
@@ -79,7 +90,28 @@ const getTask = async (req, res) => {
 
     return res.status(200).json(task);
   } catch (error) {
-    return res.status(400).json({ error: "Erro não procurar a tarefa." });
+    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
+  }
+};
+
+const getTaskBySearch = async (req, res) => {
+  const { search } = req.query;
+
+  console.log(search);
+
+  try {
+    const task = await Task.find({ name: { $eq: search } })
+      .populate("collaborators", "name email")
+      .populate("userId", "name email");
+
+    if (!task)
+      return res
+        .status(400)
+        .json({ error: "Não existe tarefa com essa pesquisa." });
+
+    return res.status(200).json(task);
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
   }
 };
 
@@ -127,4 +159,5 @@ module.exports = {
   getTasksDoneCollaboratively,
   updateTask,
   deleteTask,
+  getTaskBySearch,
 };

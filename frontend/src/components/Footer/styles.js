@@ -7,6 +7,7 @@ export const StyleFooter = styled.footer`
   > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     > p {
       color: ${({ theme }) => theme.colors.neutral600};
       font-size: ${({ theme }) => theme.fontSize.md};

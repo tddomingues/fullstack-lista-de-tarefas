@@ -5,6 +5,7 @@ const taskSchema = new mongoose.Schema(
     name: String,
     project: String,
     priority: String,
+    status: String,
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

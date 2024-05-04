@@ -67,6 +67,21 @@ export const getTask = createAsyncThunk(
   },
 );
 
+export const getTaskBySearch = createAsyncThunk(
+  "task/getTaskBySearch",
+  async (search, thunkAPI) => {
+    const { user } = thunkAPI.getState().auth;
+
+    const res = await taskService.getTaskBySearch(search, user);
+
+    if (res.error) {
+      return thunkAPI.rejectWithValue(res);
+    }
+
+    return res;
+  },
+);
+
 export const getTasksDoneCollaboratively = createAsyncThunk(
   "task/getTasksDoneCollaboratively",
   async (_, thunkAPI) => {
@@ -174,6 +189,19 @@ const taskSlice = createSlice({
       .addCase(deleteTask.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
+      })
+      .addCase(getTaskBySearch.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getTaskBySearch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tasks = action.payload;
+        state.success = true;
+      })
+      .addCase(getTaskBySearch.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.success = false;
       });
   },
 });

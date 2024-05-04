@@ -3,6 +3,7 @@ import { useEffect } from "react";
 //styles
 import { ProfileStyles } from "./styles";
 import Avatar from "../../../assets/perfil.jpg";
+import Perfil from "../../../assets/perfil.jpg";
 
 //router
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
@@ -61,36 +62,55 @@ const Project = () => {
             {task.collaborators?.length > 0 && (
               <div className="collaborators--active">
                 <span>Colaboradores</span>
-                <ul>
+                <div className="collaborators">
                   {task.collaborators.map((collaborator) => (
-                    <li key={collaborator._id}>
-                      <img src={Avatar} alt={collaborator.name} />
-                      <span>{collaborator.email}</span>
-                    </li>
+                    <div key={collaborator._id}>
+                      <img src={Perfil} alt="" />
+                      <span>
+                        <h4>{collaborator.name}</h4>
+                        <p>{collaborator.email}</p>
+                      </span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
             <div className="creator">
               <span>Criador</span>
-              <ul>
-                <li>
+              <div className="collaborators">
+                <div>
                   <img src={Avatar} alt={task.userId?.name} />
-                  <span>{task.userId?.email}</span>
-                </li>
-              </ul>
+                  <span>
+                    <h4>{task.userId?.name}</h4>
+                    <p>{task.userId?.email}</p>
+                  </span>
+                </div>
+              </div>
             </div>
             <div className="priority-and-date">
-              <label>
-                <span>Prioridade</span>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  disabled
-                  value={task.priority}
-                />
-              </label>
+              <div>
+                <label>
+                  <span>Prioridade</span>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    disabled
+                    value={task.priority}
+                  />
+                </label>
+                <label>
+                  <span>Status</span>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    disabled
+                    value={task.status}
+                  />
+                </label>
+              </div>
+
               <div>
                 <label>
                   <span>Prazo</span>

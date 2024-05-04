@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 //router
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 
 //styles
 import { SectionStyles } from "./styles";
@@ -14,11 +14,15 @@ import Loading from "../../../components/Loading/Loading";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { tasksByUser } from "../../../slices/taskSlice";
+import { getTaskBySearch } from "../../../slices/taskSlice";
 import SearchForm from "../../../components/SearchForm/SearchForm";
 
-const Home = () => {
+const Search = () => {
   const navigate = useNavigate();
+
+  const { search } = useLocation();
+
+  const query = new URLSearchParams(search).get("q");
 
   const dispatch = useDispatch();
   const { tasks, error, loading } = useSelector((state) => state.task);
@@ -26,8 +30,8 @@ const Home = () => {
   const [user] = useOutletContext();
 
   useEffect(() => {
-    dispatch(tasksByUser());
-  }, [dispatch]);
+    dispatch(getTaskBySearch(query));
+  }, [dispatch, query]);
 
   if (user === null) return window.location.reload();
 
@@ -46,16 +50,18 @@ const Home = () => {
           tasks={tasks}
           error={error}
           loading={loading}
-          title="Suas Atividades"
+          title={`Pesquisa: ${query}`}
           user={user}
         />
       ) : (
         <div className="no-tasks">
-          {tasks.length === 0 && <p>Você não possui tarefas.</p>}
+          {tasks.length === 0 && (
+            <p>Não foi encontrado tarefa(s) com essa pesquisa.</p>
+          )}
         </div>
       )}
     </SectionStyles>
   );
 };
 
-export default Home;
+export default Search;

@@ -30,7 +30,7 @@ const AddColaborator = ({
   };
 
   return (
-    <Button type="neutral950" onClick={addCollaborator}>
+    <Button type="neutral800" onClick={addCollaborator}>
       <MdOutlineGroupAdd />
     </Button>
   );

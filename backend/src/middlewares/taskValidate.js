@@ -10,7 +10,8 @@ const taskValidate = yup.object({
       .string()
       .required("Informe explicações sobre o projeto.")
       .min(3, "Informações é muito curta."),
-    priority: yup.string().required("Escolha uma prioridade"),
+    priority: yup.string().required("Escolha a prioridade"),
+    status: yup.string().required("Escolha o status."),
   }),
 });
 
