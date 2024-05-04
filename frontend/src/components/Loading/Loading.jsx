@@ -1,3 +1,4 @@
+//styles
 import { LoadingStyles } from "./styles";
 import { AiOutlineLoading } from "react-icons/ai";
 

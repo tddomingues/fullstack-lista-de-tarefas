@@ -1,5 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+
+//styles
 import { MessageStyles } from "./styles";
+
+//redux
 import { useDispatch } from "react-redux";
 import { reset as resetUser } from "../../slices/userSlice";
 import { reset as resetTask } from "../../slices/taskSlice";

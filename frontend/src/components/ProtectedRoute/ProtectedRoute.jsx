@@ -1,5 +1,9 @@
 import { useEffect } from "react";
+
+//redux
 import { useSelector } from "react-redux";
+
+//router
 import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {

@@ -77,24 +77,45 @@ export const TasksStyles = styled.div`
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 1111;
     background-color: ${({ theme }) => theme.colors.neutral950_transparent};
     width: 100%;
     height: 100%;
     display: grid;
     place-items: center;
     > div {
-      background-color: ${({ theme }) => theme.colors.neutral300};
-      padding: 0.5rem;
-      border-radius: 0.5rem;
       width: 300px;
-      > h3 {
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: ${({ theme }) => theme.fontSize.lg};
-        font-weight: 500;
+
+      > .title {
+        background: ${({ theme }) => theme.colors.neutral50};
+        border-bottom: 1px solid ${({ theme }) => theme.colors.neutral400};
+        padding: 1rem;
+
+        > h3 {
+          text-align: center;
+          font-size: ${({ theme }) => theme.fontSize.lg};
+          font-weight: 500;
+        }
       }
 
-      > div {
+      > .description {
+        background: ${({ theme }) => theme.colors.neutral200};
+        border-bottom: 1px solid ${({ theme }) => theme.colors.neutral400};
+
+        padding: 0.5rem;
+
+        > p {
+          text-align: center;
+          font-weight: 400;
+          font-size: ${({ theme }) => theme.fontSize.md};
+          color: ${({ theme }) => theme.colors.neutral800};
+        }
+      }
+
+      > .buttons {
+        background: ${({ theme }) => theme.colors.neutral200};
+
+        padding: 1rem;
         display: flex;
         justify-content: space-between;
         gap: 1rem;

@@ -1,6 +1,10 @@
-import React from "react";
+//components
 import { Button } from "../ui/Button";
+
+//styles
 import { Container } from "./styles";
+
+//router
 import { useNavigate } from "react-router-dom";
 
 const MessageSuccess = ({ text, type, id }) => {

@@ -1,5 +1,5 @@
+//styles
 import { StyleFooter } from "./styles";
-
 import { TfiLinkedin } from "react-icons/tfi";
 
 const Footer = () => {

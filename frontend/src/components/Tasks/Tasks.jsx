@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 //conversor de horas
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -5,14 +7,19 @@ import "moment/locale/pt-br";
 //styles
 import { PriorityStyles, TasksStyles } from "./styles";
 import { MdDeleteOutline, MdOutlineOpenInNew } from "react-icons/md";
+
+//router
 import { useNavigate } from "react-router-dom";
+
+//utils
 import { firstCapitalLetter } from "../../utils/firstCapitalLetter";
 
+//redux
 import { useDispatch, useSelector } from "react-redux";
-
-import { Button } from "../ui/Button";
-import { useState } from "react";
 import { deleteTask } from "../../slices/taskSlice";
+
+//components
+import { Button } from "../ui/Button";
 
 const Tasks = ({ tasks, title, user }) => {
   const navigate = useNavigate();
@@ -79,13 +86,25 @@ const Tasks = ({ tasks, title, user }) => {
       {confirmDeletion && (
         <div className="confirm-deletion">
           <div>
-            <h3>Deseja Apagar a Tarefa ?</h3>
-            <div>
-              <Button type="purple" onClick={() => setConfirmDeletion(false)}>
-                Voltar
+            <div className="title">
+              <h3>Deletar Tarefa</h3>
+            </div>
+            <div className="description">
+              <p>
+                Você tem certeza que deseja excluir permanentemente essa tarefa
+                ?
+              </p>
+            </div>
+            <div className="buttons">
+              <Button
+                type="neutral50"
+                onClick={() => setConfirmDeletion(false)}
+                style={{ color: "black" }}
+              >
+                Cancelar
               </Button>
               <Button type="purple" onClick={() => handleDeleteTask(taskId)}>
-                Confirmar
+                Deletar
               </Button>
             </div>
           </div>

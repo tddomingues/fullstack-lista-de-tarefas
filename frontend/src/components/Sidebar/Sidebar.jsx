@@ -1,10 +1,15 @@
+//styles
 import { Header } from "./styles";
 import { LuHome, LuUser2, LuLogOut } from "react-icons/lu";
 import { GrGroup } from "react-icons/gr";
 
+//router
 import { Link } from "react-router-dom";
+
+//components
 import { Button } from "../ui/Button";
 
+//redux
 import { useDispatch } from "react-redux";
 import { logout } from "../../slices/authSlice";
 
