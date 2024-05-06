@@ -3,10 +3,12 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 const updateUser = async (req, res) => {
-  const { email, name, password, confirmPassword } = req.body;
-
+  const { name, password, confirmPassword } = req.body;
+  console.log(req.file?.filename);
   try {
-    const user = await User.findOne({ email });
+    const userId = req.userId;
+
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário não cadastrado." });
@@ -23,9 +25,12 @@ const updateUser = async (req, res) => {
 
     const newUser = {
       name: name || user.name,
-      email: email,
       password: cryptoPassword || user.password,
     };
+
+    if (req.file) {
+      newUser.profilePicture = req.file.filename;
+    }
 
     await user.updateOne(newUser);
     await user.save();
@@ -37,10 +42,8 @@ const updateUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    const user = await User.findById({ _id: id });
+    const user = await User.findById({ _id: req.userId });
 
     if (!user)
       return res.status(400).json({ error: "Usuário não encontrado." });

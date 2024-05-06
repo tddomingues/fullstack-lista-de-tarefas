@@ -12,9 +12,16 @@ const {
 const validate = require("../middlewares/validate");
 const { updateValidation } = require("../middlewares/userValidate");
 const tokenValidate = require("../middlewares/tokenValidate");
+const uploadFile = require("../middlewares/uploadFile");
 
 //routes
-router.put("/update", tokenValidate, validate(updateValidation), updateUser);
+router.put(
+  "/update",
+  tokenValidate,
+  //validate(updateValidation),
+  uploadFile,
+  updateUser,
+);
 router.get("/:id", tokenValidate, getUser);
 router.get("/", tokenValidate, getUsers);
 

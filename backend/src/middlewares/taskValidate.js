@@ -6,7 +6,7 @@ const taskValidate = yup.object({
       .string()
       .required("O nome é obrigatório.")
       .min(3, "O nome é muito curto."),
-    project: yup
+    description: yup
       .string()
       .required("Informe explicações sobre o projeto.")
       .min(3, "Informações é muito curta."),

@@ -1,13 +1,21 @@
 const Task = require("../models/task");
 
+//criar uma tarefa
 const createTask = async (req, res) => {
-  const { name, project, priority, status, userId, deadline, collaborators } =
-    req.body;
+  const {
+    name,
+    description,
+    priority,
+    status,
+    userId,
+    deadline,
+    collaborators,
+  } = req.body;
 
   try {
     await Task.create({
       name,
-      project,
+      description,
       priority,
       status,
       userId,
@@ -21,10 +29,11 @@ const createTask = async (req, res) => {
   }
 };
 
+//atualizar uma tarefa
 const updateTask = async (req, res) => {
   const {
     name,
-    project,
+    description,
     priority,
     status,
     userId,
@@ -47,7 +56,7 @@ const updateTask = async (req, res) => {
 
     const newTask = {
       name: name || task.name,
-      project: project || task.project,
+      project: description || task.project,
       priority: priority || task.priority,
       status: status || task.status,
       deadline: deadline || task.deadline,
@@ -63,58 +72,7 @@ const updateTask = async (req, res) => {
   }
 };
 
-const getTasksByUser = async (req, res) => {
-  try {
-    const tasks = await Task.find({ userId: req.userId })
-      .populate("collaborators", "email name")
-      .populate("userId", "email name")
-      .sort({
-        createdAt: -1,
-      });
-
-    return res.status(200).json(tasks);
-  } catch (error) {
-    return res.status(400).json({ error: "Erro ao encontrar as tarefas." });
-  }
-};
-
-const getTask = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const task = await Task.findById(id)
-      .populate("collaborators", "name email")
-      .populate("userId", "name email");
-
-    if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
-
-    return res.status(200).json(task);
-  } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
-  }
-};
-
-const getTaskBySearch = async (req, res) => {
-  const { search } = req.query;
-
-  console.log(search);
-
-  try {
-    const task = await Task.find({ name: { $eq: search } })
-      .populate("collaborators", "name email")
-      .populate("userId", "name email");
-
-    if (!task)
-      return res
-        .status(400)
-        .json({ error: "Não existe tarefa com essa pesquisa." });
-
-    return res.status(200).json(task);
-  } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
-  }
-};
-
+//deletar uma tarefa
 const deleteTask = async (req, res) => {
   const { id } = req.params;
 
@@ -129,6 +87,62 @@ const deleteTask = async (req, res) => {
   }
 };
 
+//buscar a(s) tarefa(s) do usuário
+const getTasksByUser = async (req, res) => {
+  try {
+    const tasks = await Task.find({ userId: req.userId })
+      .populate("collaborators", "email name profilePicture")
+      .populate("userId", "email name profilePicture")
+      .sort({
+        createdAt: -1,
+      });
+
+    return res.status(200).json(tasks);
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao encontrar as tarefas." });
+  }
+};
+
+//buscar uma tarefa do usuário
+const getTask = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const task = await Task.findById(id)
+      .populate("collaborators", "name email profilePicture")
+      .populate("userId", "name email profilePicture");
+
+    if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
+
+    return res.status(200).json(task);
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
+  }
+};
+
+//buscar tarefa(s) por pesquisa
+const getTaskBySearch = async (req, res) => {
+  const { search } = req.query;
+
+  const searchForLowerCase = search.toLowerCase();
+
+  try {
+    const task = await Task.find({ name: { $eq: searchForLowerCase } })
+      .populate("collaborators", "name email")
+      .populate("userId", "name email");
+
+    if (!task)
+      return res
+        .status(400)
+        .json({ error: "Não existe tarefa com essa pesquisa." });
+
+    return res.status(200).json(task);
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
+  }
+};
+
+//buscar a(s) tarefa(s) que faço parte
 const getTasksDoneCollaboratively = async (req, res) => {
   try {
     const userId = req.userId;
@@ -136,8 +150,8 @@ const getTasksDoneCollaboratively = async (req, res) => {
     const tasks = await Task.find({
       collaborators: { $in: userId },
     })
-      .populate("userId", "name email")
-      .populate("collaborators", "name email");
+      .populate("userId", "name email profilePicture")
+      .populate("collaborators", "name email profilePicture");
 
     if (!tasks)
       return res
