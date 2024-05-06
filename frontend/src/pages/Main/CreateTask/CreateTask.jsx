@@ -23,7 +23,7 @@ const CreateTask = () => {
   const [deadline, setDeadline] = useState(
     new Date().toISOString().split("T")[0],
   );
-  const [project, setProject] = useState("");
+  const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("alta");
   const [status, setStatus] = useState("Em Progresso");
   const [collaborator, setCollaborator] = useState("");
@@ -49,7 +49,7 @@ const CreateTask = () => {
 
     const data = {
       name,
-      project,
+      description,
       priority,
       status,
       userId: user.userId,
@@ -118,7 +118,14 @@ const CreateTask = () => {
                 <div className="collaborators">
                   {collaborators.map((collaborator) => (
                     <div key={collaborator._id}>
-                      <img src={Perfil} alt="" />
+                      <img
+                        src={
+                          !collaborator.profilePicture
+                            ? Perfil
+                            : `http://localhost:3000/uploads/${collaborator.profilePicture}`
+                        }
+                        alt={collaborator.name}
+                      />
                       <span>
                         <h4>{collaborator.name}</h4>
                         <p>{collaborator.email}</p>
@@ -157,10 +164,10 @@ const CreateTask = () => {
                   onChange={({ target }) => setStatus(target.value)}
                   value={status || ""}
                 >
-                  <option value="Não Foi Iniciado">Não Foi Iniciado</option>
-                  <option value="Em Progresso">Em Progresso</option>
-                  <option value="Completado">Completado</option>
-                  <option value="Adiado">Adiado</option>
+                  <option value="não foi iniciado">Não Foi Iniciado</option>
+                  <option value="em progresso">Em Progresso</option>
+                  <option value="completado">Completado</option>
+                  <option value="adiado">Adiado</option>
                 </select>
               </label>
             </div>
@@ -178,14 +185,14 @@ const CreateTask = () => {
             </label>
 
             <label>
-              <span>Projeto</span>
+              <span>Descrição</span>
               <textarea
                 name=""
                 id=""
                 cols="30"
                 rows="10"
-                onChange={({ target }) => setProject(target.value)}
-                value={project || ""}
+                onChange={({ target }) => setDescription(target.value)}
+                value={description || ""}
               ></textarea>
             </label>
 

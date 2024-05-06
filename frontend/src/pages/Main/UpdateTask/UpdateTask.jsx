@@ -28,7 +28,7 @@ const UpdateTask = () => {
 
   const [name, setName] = useState(task.name);
   const [deadline, setDeadline] = useState(task.deadline);
-  const [project, setProject] = useState(task.project);
+  const [description, setDescription] = useState(task.description);
   const [priority, setPriority] = useState(task.priority);
   const [status, setStatus] = useState(task.status);
   const [collaborator, setCollaborator] = useState("");
@@ -51,7 +51,7 @@ const UpdateTask = () => {
 
     const data = {
       name,
-      project,
+      description,
       priority,
       status,
       userId: sliceUser.userId,
@@ -123,7 +123,14 @@ const UpdateTask = () => {
                 <div className="collaborators">
                   {collaborators.map((collaborator) => (
                     <div key={collaborator._id}>
-                      <img src={Perfil} alt="" />
+                      <img
+                        src={
+                          !collaborator.profilePicture
+                            ? Perfil
+                            : `http://localhost:3000/uploads/${collaborator.profilePicture}`
+                        }
+                        alt={collaborator.name}
+                      />
                       <span>
                         <h4>{collaborator.name}</h4>
                         <p>{collaborator.email}</p>
@@ -182,14 +189,14 @@ const UpdateTask = () => {
             </label>
 
             <label>
-              <span>Projeto</span>
+              <span>Descrição</span>
               <textarea
                 name=""
                 id=""
                 cols="30"
                 rows="10"
-                onChange={({ target }) => setProject(target.value)}
-                value={project || ""}
+                onChange={({ target }) => setDescription(target.value)}
+                value={description || ""}
               ></textarea>
             </label>
 

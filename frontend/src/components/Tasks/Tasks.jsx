@@ -5,8 +5,9 @@ import moment from "moment";
 import "moment/locale/pt-br";
 
 //styles
-import { PriorityStyles, TasksStyles } from "./styles";
+import { TasksStyles } from "./styles";
 import { MdDeleteOutline, MdOutlineOpenInNew } from "react-icons/md";
+import Perfil from "../../assets/perfil.jpg";
 
 //router
 import { useNavigate } from "react-router-dom";
@@ -47,6 +48,7 @@ const Tasks = ({ tasks, title, user }) => {
             <th>Prioridade</th>
             <th>Status</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -54,13 +56,23 @@ const Tasks = ({ tasks, title, user }) => {
             tasks.map((task) => (
               <tr key={task._id}>
                 <td>{task.name}</td>
-                <td>{task.userId.name}</td>
+                <td className="creator">
+                  <img
+                    src={
+                      !task.userId?.profilePicture
+                        ? Perfil
+                        : `http://localhost:3000/uploads/${task.userId?.profilePicture}`
+                    }
+                    alt={task.name}
+                  />
+                  <p>{task.userId?.name}</p>
+                </td>
                 <td>{moment(task.deadline).format("DD/MM/YYYY")}</td>
 
                 <td>
                   <span>{firstCapitalLetter(task.priority)}</span>
                 </td>
-                <td>{task.status}</td>
+                <td>{firstCapitalLetter(task.status)}</td>
                 <td className="buttons">
                   <Button
                     type="indigo"
@@ -68,6 +80,8 @@ const Tasks = ({ tasks, title, user }) => {
                   >
                     <MdOutlineOpenInNew />
                   </Button>
+                </td>
+                <td className="buttons">
                   <Button
                     type="red"
                     onClick={() => {

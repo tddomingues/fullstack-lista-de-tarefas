@@ -1,9 +1,10 @@
-const url = "http://localhost:3000/api/tasks";
 import { fetchConfig } from "../utils/config";
 
-const postCreateTask = async (data, user) => {
+const BASE_URL = "http://localhost:3000/api/tasks";
+
+const fetchCreateTask = async (data, user) => {
   const res = await fetch(
-    url + "/newTask",
+    BASE_URL + "/createTask",
     fetchConfig("POST", data, user.token),
   )
     .then((res) => res.json())
@@ -12,9 +13,9 @@ const postCreateTask = async (data, user) => {
   return res;
 };
 
-const updateTask = async (data, id, user) => {
+const fetchUpdateTask = async (data, id, user) => {
   const res = await fetch(
-    url + "/updatetask/" + id,
+    BASE_URL + "/updateTask/" + id,
     fetchConfig("PUT", data, user.token),
   )
     .then((res) => res.json())
@@ -23,9 +24,9 @@ const updateTask = async (data, id, user) => {
   return res;
 };
 
-const getTasksByUser = async (user) => {
+const fetchGetTasksByUser = async (user) => {
   const res = await fetch(
-    url + "/usertasks",
+    BASE_URL + "/userTasks",
     fetchConfig("GET", null, user.token),
   )
     .then((res) => res.json())
@@ -34,9 +35,9 @@ const getTasksByUser = async (user) => {
   return res;
 };
 
-const getTask = async (id, user) => {
+const fetchGetTask = async (id, user) => {
   const res = await fetch(
-    url + "/task/" + id,
+    BASE_URL + "/task/" + id,
     fetchConfig("GET", null, user.token),
   )
     .then((res) => res.json())
@@ -45,9 +46,9 @@ const getTask = async (id, user) => {
   return res;
 };
 
-const getTaskBySearch = async (search, user) => {
+const fetchGetTaskBySearch = async (search, user) => {
   const res = await fetch(
-    url + "/searchTask/?search=" + search,
+    BASE_URL + "/search/?search=" + search,
     fetchConfig("GET", null, user.token),
   )
     .then((res) => res.json())
@@ -56,9 +57,9 @@ const getTaskBySearch = async (search, user) => {
   return res;
 };
 
-const getTasksDoneCollaboratively = async (user) => {
+const fechGetTasksDoneCollaboratively = async (user) => {
   const res = await fetch(
-    url + "/collaboration",
+    BASE_URL + "/collaborationTasks",
     fetchConfig("GET", null, user.token),
   )
     .then((res) => res.json())
@@ -67,9 +68,9 @@ const getTasksDoneCollaboratively = async (user) => {
   return res;
 };
 
-const deleteTask = async (id, user) => {
+const fetchDeleteTask = async (id, user) => {
   const res = await fetch(
-    url + "/deleteTask/" + id,
+    BASE_URL + "/deleteTask/" + id,
     fetchConfig("DELETE", null, user.token),
   )
     .then((res) => res.json())
@@ -79,11 +80,11 @@ const deleteTask = async (id, user) => {
 };
 
 export const taskService = {
-  postCreateTask,
-  getTasksByUser,
-  getTask,
-  getTasksDoneCollaboratively,
-  updateTask,
-  deleteTask,
-  getTaskBySearch,
+  fetchCreateTask,
+  fetchGetTasksByUser,
+  fetchUpdateTask,
+  fetchGetTask,
+  fetchGetTaskBySearch,
+  fechGetTasksDoneCollaboratively,
+  fetchDeleteTask,
 };

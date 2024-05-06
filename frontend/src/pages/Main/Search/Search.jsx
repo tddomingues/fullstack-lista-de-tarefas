@@ -30,7 +30,7 @@ const Search = () => {
   const [user] = useOutletContext();
 
   useEffect(() => {
-    dispatch(getTaskBySearch(query));
+    dispatch(getTaskBySearch(query.toLocaleLowerCase()));
   }, [dispatch, query]);
 
   if (user === null) return window.location.reload();

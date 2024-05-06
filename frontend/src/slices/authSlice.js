@@ -15,14 +15,10 @@ const initialState = {
 export const register = createAsyncThunk(
   "user/register",
   async (data, thunkAPI) => {
-    const res = await authService.registerRequest(data);
+    const res = await authService.fetchRegister(data);
 
     if (res["error"]) {
       return thunkAPI.rejectWithValue(res["error"]);
-    }
-
-    if (res.userId) {
-      //localStorage.setItem("user", JSON.stringify(res));
     }
 
     return res;
@@ -30,7 +26,7 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk("user/login", async (data, thunkAPI) => {
-  const res = await authService.loginRequest(data);
+  const res = await authService.fetchLogin(data);
 
   if (res["error"]) {
     return thunkAPI.rejectWithValue(res["error"]);

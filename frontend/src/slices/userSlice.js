@@ -11,11 +11,11 @@ const initialState = {
 };
 
 export const updateProfile = createAsyncThunk(
-  "user/updateprofile",
+  "user/updateProfile",
   async (data, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    const res = await authService.updateProfile(data, user.token);
+    const res = await authService.fetchUpdateProfile(data, user.token);
 
     if (res["error"]) {
       return thunkAPI.rejectWithValue(res["error"]);
@@ -25,23 +25,20 @@ export const updateProfile = createAsyncThunk(
   },
 );
 
-export const getUser = createAsyncThunk(
-  "user/getuser",
-  async (id, thunkAPI) => {
-    const user = thunkAPI.getState().auth.user;
+export const getUser = createAsyncThunk("user/getUser", async (_, thunkAPI) => {
+  const user = thunkAPI.getState().auth.user;
 
-    const res = await authService.getUser(id, user.token);
+  const res = await authService.fetchGetUser(user.token);
 
-    return res;
-  },
-);
+  return res;
+});
 
 export const getUsers = createAsyncThunk(
-  "user/getusers",
+  "user/getUsers",
   async (_, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    const res = await authService.getUsers(user.token);
+    const res = await authService.fetchGetUsers(user.token);
 
     return res;
   },

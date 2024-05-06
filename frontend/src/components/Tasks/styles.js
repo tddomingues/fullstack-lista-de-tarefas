@@ -46,6 +46,7 @@ export const TasksStyles = styled.div`
 
       > tr {
         border-top: 1px solid ${({ theme }) => theme.colors.neutral300};
+
         > td {
           padding: 0.5rem;
           text-align: start;
@@ -58,15 +59,25 @@ export const TasksStyles = styled.div`
         }
 
         > .buttons {
-          display: flex;
-          width: 100%;
-          justify-content: end;
-          gap: 1rem;
+          width: 50px;
 
           > button {
             > svg {
               margin-top: 0;
             }
+          }
+        }
+
+        > .creator {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          > img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
           }
         }
       }

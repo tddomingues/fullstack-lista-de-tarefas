@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { taskService } from "../service/taskService";
-import { authService } from "../service/authService";
 
 const initialState = {
   tasks: [],
@@ -11,11 +10,11 @@ const initialState = {
 };
 
 export const createTask = createAsyncThunk(
-  "task/createtask",
+  "task/createTask",
   async (data, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    const res = await taskService.postCreateTask(data, user);
+    const res = await taskService.fetchCreateTask(data, user);
 
     if (res.error) {
       return thunkAPI.rejectWithValue(res);
@@ -29,7 +28,7 @@ export const updateTask = createAsyncThunk(
   "task/updateTask",
   async ({ data, id }, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
-    const res = await taskService.updateTask(data, id, user);
+    const res = await taskService.fetchUpdateTask(data, id, user);
 
     if (res.error) return thunkAPI.rejectWithValue(res);
 
@@ -37,12 +36,12 @@ export const updateTask = createAsyncThunk(
   },
 );
 
-export const tasksByUser = createAsyncThunk(
-  "task/tasksbyid",
+export const getTasksByUser = createAsyncThunk(
+  "task/getTasksByUser",
   async (_, thunkAPI) => {
     const user = thunkAPI.getState().auth.user;
 
-    const res = await taskService.getTasksByUser(user);
+    const res = await taskService.fetchGetTasksByUser(user);
 
     if (res.error) {
       return thunkAPI.rejectWithValue(res);
@@ -57,7 +56,7 @@ export const getTask = createAsyncThunk(
   async (id, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
 
-    const res = await taskService.getTask(id, user);
+    const res = await taskService.fetchGetTask(id, user);
 
     if (res.error) {
       return thunkAPI.rejectWithValue(res);
@@ -72,7 +71,7 @@ export const getTaskBySearch = createAsyncThunk(
   async (search, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
 
-    const res = await taskService.getTaskBySearch(search, user);
+    const res = await taskService.fetchGetTaskBySearch(search, user);
 
     if (res.error) {
       return thunkAPI.rejectWithValue(res);
@@ -87,7 +86,7 @@ export const getTasksDoneCollaboratively = createAsyncThunk(
   async (_, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
 
-    const res = await taskService.getTasksDoneCollaboratively(user);
+    const res = await taskService.fechGetTasksDoneCollaboratively(user);
 
     if (res.error) return thunkAPI.rejectWithValue(res);
 
@@ -99,7 +98,7 @@ export const deleteTask = createAsyncThunk(
   "task/deleteTask",
   async (id, thunkAPI) => {
     const { user } = thunkAPI.getState().auth;
-    const res = await taskService.deleteTask(id, user);
+    const res = await taskService.fetchDeleteTask(id, user);
 
     if (res.error) return thunkAPI.rejectWithValue(res);
 
@@ -131,14 +130,14 @@ const taskSlice = createSlice({
         state.error = action.payload.error;
         state.success = false;
       })
-      .addCase(tasksByUser.pending, (state, action) => {
+      .addCase(getTasksByUser.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(tasksByUser.fulfilled, (state, action) => {
+      .addCase(getTasksByUser.fulfilled, (state, action) => {
         state.loading = false;
         state.tasks = action.payload;
       })
-      .addCase(tasksByUser.rejected, (state, action) => {
+      .addCase(getTasksByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
       })

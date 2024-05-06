@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 //components
 import Loading from "../../../components/Loading/Loading";
 import { Button } from "../../../components/ui/Button";
+import { firstCapitalLetter } from "../../../utils/firstCapitalLetter";
 
 const Project = () => {
   const dispatch = useDispatch();
@@ -49,14 +50,14 @@ const Project = () => {
               <input type="text" disabled value={task.name} />
             </label>
             <label>
-              <span>Detalhes</span>
+              <span>Descrição</span>
               <textarea
                 name=""
                 id=""
                 cols="30"
                 rows="10"
                 disabled
-                value={task.project}
+                value={task.description}
               ></textarea>
             </label>
             {task.collaborators?.length > 0 && (
@@ -65,7 +66,14 @@ const Project = () => {
                 <div className="collaborators">
                   {task.collaborators.map((collaborator) => (
                     <div key={collaborator._id}>
-                      <img src={Perfil} alt="" />
+                      <img
+                        src={
+                          !collaborator.profilePicture
+                            ? Perfil
+                            : `http://localhost:3000/uploads/${collaborator.profilePicture}`
+                        }
+                        alt={collaborator.name}
+                      />
                       <span>
                         <h4>{collaborator.name}</h4>
                         <p>{collaborator.email}</p>
@@ -79,7 +87,14 @@ const Project = () => {
               <span>Criador</span>
               <div className="collaborators">
                 <div>
-                  <img src={Avatar} alt={task.userId?.name} />
+                  <img
+                    src={
+                      !task.userId?.profilePicture
+                        ? Perfil
+                        : `http://localhost:3000/uploads/${task.userId?.profilePicture}`
+                    }
+                    alt={task.userId?.name}
+                  />
                   <span>
                     <h4>{task.userId?.name}</h4>
                     <p>{task.userId?.email}</p>
@@ -96,7 +111,7 @@ const Project = () => {
                     name=""
                     id=""
                     disabled
-                    value={task.priority}
+                    value={firstCapitalLetter(task.priority)}
                   />
                 </label>
                 <label>
@@ -106,7 +121,7 @@ const Project = () => {
                     name=""
                     id=""
                     disabled
-                    value={task.status}
+                    value={firstCapitalLetter(task.status)}
                   />
                 </label>
               </div>
@@ -149,13 +164,21 @@ const Project = () => {
             <Button type="purple" onClick={() => navigate("/")}>
               Voltar
             </Button>
-            <Button
-              type="purple"
-              onClick={() => navigate(`/updateTask/${id}`)}
-              disabled={task.userId?._id !== user.userId ? true : false}
-            >
-              Alterar Dados
-            </Button>
+            <div>
+              <Button
+                type="indigo"
+                onClick={() => navigate(`/project/notes/${id}`)}
+              >
+                Inserir Nota
+              </Button>{" "}
+              <Button
+                type="purple"
+                onClick={() => navigate(`/updateTask/${id}`)}
+                disabled={task.userId?._id !== user.userId ? true : false}
+              >
+                Alterar Dados
+              </Button>
+            </div>
           </div>
         </div>
       )}

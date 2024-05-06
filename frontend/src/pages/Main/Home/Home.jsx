@@ -14,7 +14,7 @@ import Loading from "../../../components/Loading/Loading";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { tasksByUser } from "../../../slices/taskSlice";
+import { getTasksByUser } from "../../../slices/taskSlice";
 import SearchForm from "../../../components/SearchForm/SearchForm";
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
   const [user] = useOutletContext();
 
   useEffect(() => {
-    dispatch(tasksByUser());
+    dispatch(getTasksByUser());
   }, [dispatch]);
 
   if (user === null) return window.location.reload();

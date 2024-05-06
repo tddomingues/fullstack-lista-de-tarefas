@@ -14,6 +14,7 @@ import Collaboration from "./pages/Main/Collaboration/Collaboration";
 import Project from "./pages/Main/Project/Project";
 import UpdateTask from "./pages/Main/UpdateTask/UpdateTask";
 import Search from "./pages/Main/Search/Search";
+import Notes from "./pages/Main/Notes/Notes";
 
 const AppRoutes = () => {
   const { user } = useSelector((state) => state.auth);
@@ -34,6 +35,7 @@ const AppRoutes = () => {
         <Route path="/collaboration" element={<Collaboration />} />
         <Route path="/project/:id" element={<Project />} />
         <Route path="/updateTask/:id" element={<UpdateTask />} />
+        <Route path="/project/notes/:id" element={<Notes />} />
         <Route path="/search" element={<Search />} />
       </Route>
 

@@ -11,18 +11,18 @@ const {
   deleteTask,
   getTaskBySearch,
 } = require("../controllers/taskController");
-const tokenValidate = require("../middlewares/tokenValidate");
-const validate = require("../middlewares/validate");
 
 //middlewares
 const { taskValidate } = require("../middlewares/taskValidate");
+const tokenValidate = require("../middlewares/tokenValidate");
+const validate = require("../middlewares/validate");
 
-router.post("/newTask", tokenValidate, validate(taskValidate), createTask);
-router.get("/usertasks", tokenValidate, getTasksByUser);
+router.post("/createTask", tokenValidate, validate(taskValidate), createTask);
+router.get("/userTasks", tokenValidate, getTasksByUser);
 router.get("/task/:id", tokenValidate, getTask);
-router.get("/collaboration", tokenValidate, getTasksDoneCollaboratively);
-router.get("/searchTask", tokenValidate, getTaskBySearch);
-router.put("/updatetask/:id", tokenValidate, updateTask);
+router.get("/collaborationTasks", tokenValidate, getTasksDoneCollaboratively);
+router.get("/search", tokenValidate, getTaskBySearch);
+router.put("/updateTask/:id", tokenValidate, updateTask);
 router.delete("/deleteTask/:id", tokenValidate, deleteTask);
 
 module.exports = router;

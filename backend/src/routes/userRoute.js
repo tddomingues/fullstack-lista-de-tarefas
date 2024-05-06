@@ -18,11 +18,11 @@ const uploadFile = require("../middlewares/uploadFile");
 router.put(
   "/update",
   tokenValidate,
-  //validate(updateValidation),
+  validate(updateValidation),
   uploadFile,
   updateUser,
 );
-router.get("/:id", tokenValidate, getUser);
-router.get("/", tokenValidate, getUsers);
+router.get("/user", tokenValidate, getUser);
+router.get("/users", tokenValidate, getUsers);
 
 module.exports = router;

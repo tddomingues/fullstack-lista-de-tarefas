@@ -1,16 +1,26 @@
 export const fetchConfig = (method, data, token) => {
-  const config = {
-    method,
-  };
+  let config;
 
-  if (data) {
-    config.headers = {
-      "Content-Type": "application/json",
+  if (data === null && (method === "GET" || method === "DELETE")) {
+    config = {
+      method,
     };
+  }
 
-    if (method === "POST" || method === "PUT") {
-      config.body = JSON.stringify(data);
-    }
+  if (data instanceof FormData && (method === "PUT" || method === "POST")) {
+    config = {
+      method,
+      headers: {},
+      body: data instanceof FormData ? data : JSON.stringify(data),
+    };
+  } else if (method === "PUT" || method === "POST") {
+    config = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
   }
 
   if (token) {

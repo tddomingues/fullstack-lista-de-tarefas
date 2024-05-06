@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { Section, Main } from "../styles";
 
@@ -17,8 +17,6 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   console.log("success ", success);
-
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();

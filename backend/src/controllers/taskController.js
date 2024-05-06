@@ -36,37 +36,58 @@ const updateTask = async (req, res) => {
     description,
     priority,
     status,
-    userId,
     ownerId,
     deadline,
     collaborators,
+    notes,
   } = req.body;
 
   const { id } = req.params;
+  console.log(notes);
 
   try {
-    console.log(userId, req.userId);
-    if (userId !== ownerId) {
-      return res
-        .status(400)
-        .json({ error: "Essa tarefa não corresponde ao criador." });
-    }
-
     const task = await Task.findOne({ _id: id });
 
-    const newTask = {
-      name: name || task.name,
-      project: description || task.project,
-      priority: priority || task.priority,
-      status: status || task.status,
-      deadline: deadline || task.deadline,
-      collaborators: collaborators || task.collaborators,
-    };
+    let newTask = {};
+
+    if (req.userId === ownerId) {
+      if (name) {
+        newTask.name = name;
+      }
+
+      if (description) {
+        newTask.description = description;
+      }
+
+      if (priority) {
+        newTask.priority = priority;
+      }
+
+      if (status) {
+        newTask.status = status;
+      }
+
+      if (deadline) {
+        newTask.deadline = deadline;
+      }
+
+      if (collaborators) {
+        newTask.collaborators = collaborators;
+      }
+
+      if (notes) {
+        newTask.notes = notes;
+      }
+    } else {
+      if (notes) {
+        newTask.notes = [...task.notes, notes];
+      }
+    }
 
     await task.updateOne(newTask);
     await task.save();
 
-    return res.status(200).json(task);
+    return res.status(200).json({ message: "Tarefa atualizada com sucesso." });
   } catch (error) {
     return res.status(400).json({ error: "Erro ao atualizar a tarefa." });
   }
@@ -79,6 +100,14 @@ const deleteTask = async (req, res) => {
   console.log(id);
 
   try {
+    const task = await Task.findOne({ _id: id });
+
+    if (task.userId.toHexString() !== req.userId) {
+      return res
+        .status(400)
+        .json({ error: "Essa tarefa não pode ser apagada por você." });
+    }
+
     await Task.deleteOne({ _id: id });
 
     return res.status(200).json({ message: "Tarefa apagada com sucesso." });
@@ -110,7 +139,14 @@ const getTask = async (req, res) => {
   try {
     const task = await Task.findById(id)
       .populate("collaborators", "name email profilePicture")
-      .populate("userId", "name email profilePicture");
+      .populate("userId", "name email profilePicture")
+      .populate({
+        path: "notes",
+        populate: {
+          path: "createdBy",
+          select: "name email profilePicture",
+        },
+      });
 
     if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
 
@@ -128,8 +164,8 @@ const getTaskBySearch = async (req, res) => {
 
   try {
     const task = await Task.find({ name: { $eq: searchForLowerCase } })
-      .populate("collaborators", "name email")
-      .populate("userId", "name email");
+      .populate("collaborators", "name email profilePicture")
+      .populate("userId", "name email profilePicture");
 
     if (!task)
       return res

@@ -37,17 +37,10 @@ const loginValidation = yup.object({
 
 const updateValidation = yup.object({
   body: yup.object({
-    name: yup
-      .string()
-      .required("O nome é obrigatório.")
-      .min(3, "O nome é muito curto."),
-    password: yup
-      .string()
-      .required("A senha é obrigatória.")
-      .min(3, "Senha curta."),
+    name: yup.string().min(3, "O nome é muito curto."),
+    password: yup.string().min(3, "Senha curta."),
     confirmPassword: yup
       .string()
-      .required("A senha é obrigatória.")
       .min(3, "Senha curta.")
       .oneOf([yup.ref("password"), null], "Senhas não correspondentes!."),
   }),

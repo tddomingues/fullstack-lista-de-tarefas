@@ -67,6 +67,7 @@ export const ProfileStyles = styled.section`
               width: 30px;
               height: 30px;
               border-radius: 50%;
+              object-fit: cover;
             }
             > span {
               font-size: ${({ theme }) => theme.fontSize.md};
@@ -140,7 +141,13 @@ export const ProfileStyles = styled.section`
       display: flex;
       align-items: end;
       justify-content: space-between;
-      > button {
+
+      > div {
+        display: flex;
+        align-items: end;
+        gap: 1rem;
+      }
+      button {
         margin-top: 1rem;
       }
     }

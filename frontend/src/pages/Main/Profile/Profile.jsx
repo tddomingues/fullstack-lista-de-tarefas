@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 //styles
 import { ProfileStyles } from "./styles";
+import Perfil from "../../../assets/perfil.jpg";
+import { MdEditNote, MdOutlineAddAPhoto } from "react-icons/md";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +22,8 @@ const Profile = () => {
   const [name, setName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [viewImage, setViewImage] = useState("");
+  const [file, setFile] = useState("");
   const [updateData, setUpdateData] = useState(false);
 
   const { id } = useParams();
@@ -38,18 +42,27 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = {
-      name: name,
-      email: userSlice.email,
-      confirmPassword: confirmPassword,
-      password: password,
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("confirmPassword", confirmPassword);
+    formData.append("password", password);
+    console.log(file);
 
-    dispatch(updateProfile(data));
+    if (file) {
+      formData.append("file", file);
+      console.log("object");
+    }
+    console.log(formData);
+    dispatch(updateProfile(formData));
+  };
+
+  const handleProfilePicture = (e) => {
+    setViewImage(URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.files[0]);
   };
 
   useEffect(() => {
-    dispatch(getUser(id));
+    dispatch(getUser());
   }, [dispatch, id]);
 
   if (user === null) return window.location.reload();
@@ -60,31 +73,64 @@ const Profile = () => {
     <ProfileStyles>
       {!updateData ? (
         <div className="info">
-          <h2>Informações</h2>
-          <form>
-            <label>
-              <span>Email</span>
-              <input type="email" value={userSlice.email || ""} disabled />
-            </label>
-            <label>
-              <span>Nome</span>
-              <input type="text" value={userSlice.name || ""} disabled />
-            </label>
-          </form>
-          <Button type="purple" onClick={() => setUpdateData(!updateData)}>
-            Alterar Dados
-          </Button>
+          <div>
+            <form>
+              <label className="img">
+                <img
+                  src={
+                    !userSlice.profilePicture
+                      ? Perfil
+                      : `http://localhost:3000/uploads/${userSlice.profilePicture}`
+                  }
+                  alt={userSlice.name}
+                />
+              </label>
+              <label>
+                <span>Nome</span>
+                <input type="text" disabled value={userSlice.name} />
+              </label>
+              <label>
+                <span>Cargo</span>
+                <input type="text" disabled value="Gerente" />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="text" disabled value={userSlice.email} />
+              </label>
+            </form>
+            <Button type="indigo" onClick={() => setUpdateData(!updateData)}>
+              <MdEditNote />
+            </Button>
+          </div>
         </div>
       ) : !message ? (
         <div className="update">
           <h2>Atualizar Dados</h2>
           <form onSubmit={handleSubmit}>
+            <label className="picture">
+              <input type="file" id="" onChange={handleProfilePicture} />
+              <span className="currentImage">
+                <img
+                  src={
+                    userSlice.profilePicture && !viewImage
+                      ? `http://localhost:3000/uploads/${userSlice.profilePicture}`
+                      : viewImage
+                  }
+                  alt={userSlice.profilePicture && userSlice.name}
+                />
+              </span>
+              <span className="icon">
+                <MdOutlineAddAPhoto />
+              </span>
+            </label>
+            <label></label>
             <label>
               <span>Nome</span>
               <input
                 type="text"
                 onChange={({ target }) => setName(target.value)}
                 value={name || ""}
+                placeholder={userSlice.name}
               />
             </label>
             <label>
