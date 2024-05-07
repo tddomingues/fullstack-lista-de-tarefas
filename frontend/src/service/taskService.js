@@ -18,7 +18,9 @@ const fetchUpdateTask = async (data, id, user) => {
     BASE_URL + "/updateTask/" + id,
     fetchConfig("PUT", data, user.token),
   )
-    .then((res) => res.json())
+    .then((res) => {
+      return res.json();
+    })
     .catch((err) => err);
 
   return res;

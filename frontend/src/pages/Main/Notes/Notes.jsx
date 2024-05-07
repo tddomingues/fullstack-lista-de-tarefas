@@ -1,44 +1,56 @@
 import { Button } from "../../../components/ui/Button";
+import Loading from "../../../components/Loading/Loading";
 import { SectionStyles } from "./styles";
 import Avatar from "../../../assets/perfil.jpg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTask, reset, updateTask } from "../../../slices/taskSlice";
+
+//conversor de horas
+import moment from "moment";
+import "moment/locale/pt-br";
+
+import {
+  createNote,
+  deleteNote,
+  getNotesByTask,
+} from "../../../slices/noteSlice";
 
 const Notes = () => {
   const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
+
+  const { notes, error, success } = useSelector((state) => state.note);
   const { user } = useSelector((state) => state.auth);
-  const { task, success } = useSelector((state) => state.task);
-  console.log(success);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
+  console.log(notes);
+
+  const handleTaskDelete = (id) => {
+    dispatch(deleteNote(id));
+    window.location.reload();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      notes: {
-        comment,
-        createdBy: {
-          _id: user.userId,
-        },
-      },
+      comment,
+      taskId: id,
     };
 
     console.log(data);
 
-    dispatch(updateTask({ data, id }));
+    dispatch(createNote(data));
   };
 
   useEffect(() => {
-    dispatch(getTask(id));
-    dispatch(reset());
+    dispatch(getNotesByTask(id));
   }, [dispatch, id]);
 
-  // if (success === true) return window.location.reload();
+  if (!success) return <Loading />;
 
   return (
     <SectionStyles>
@@ -67,22 +79,29 @@ const Notes = () => {
 
       <div className="notes">
         <h2>Notas</h2>
-
-        {task.notes &&
-          task.notes.map((note) => (
+        {notes &&
+          notes.map((note) => (
             <div key={note._id}>
+              <p className="date">
+                {moment(note.createdAt).format("DD/MM/YYYY à[s] hh:mm:ss")}
+              </p>
               <img
                 src={
-                  !task.userId?.profilePicture
+                  !note.userId?.profilePicture
                     ? Avatar
-                    : `http://localhost:3000/uploads/${note.createdBy?.profilePicture}`
+                    : `http://localhost:3000/uploads/${note.userId?.profilePicture}`
                 }
-                alt={task.name}
+                alt={note.userId?.name}
               />
-              <div>
-                <h4>{note.createdBy?.name}</h4>
+              <div className="name-comment">
+                <h4>{note.userId?.name}</h4>
                 <p>{note.comment}</p>
               </div>
+              {note.userId?._id === user.userId && (
+                <Button type="red" onClick={() => handleTaskDelete(note._id)}>
+                  X
+                </Button>
+              )}
             </div>
           ))}
       </div>

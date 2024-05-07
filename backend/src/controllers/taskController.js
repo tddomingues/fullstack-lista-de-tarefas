@@ -39,49 +39,43 @@ const updateTask = async (req, res) => {
     ownerId,
     deadline,
     collaborators,
-    notes,
   } = req.body;
 
   const { id } = req.params;
-  console.log(notes);
 
   try {
     const task = await Task.findOne({ _id: id });
 
     let newTask = {};
 
-    if (req.userId === ownerId) {
-      if (name) {
-        newTask.name = name;
-      }
+    if (req.userId !== ownerId) {
+      return res
+        .status(400)
+        .json({ error: "Você não tem permissão para atualizar essa tarefa." });
+    }
 
-      if (description) {
-        newTask.description = description;
-      }
+    if (name) {
+      newTask.name = name;
+    }
 
-      if (priority) {
-        newTask.priority = priority;
-      }
+    if (description) {
+      newTask.description = description;
+    }
 
-      if (status) {
-        newTask.status = status;
-      }
+    if (priority) {
+      newTask.priority = priority;
+    }
 
-      if (deadline) {
-        newTask.deadline = deadline;
-      }
+    if (status) {
+      newTask.status = status;
+    }
 
-      if (collaborators) {
-        newTask.collaborators = collaborators;
-      }
+    if (deadline) {
+      newTask.deadline = deadline;
+    }
 
-      if (notes) {
-        newTask.notes = notes;
-      }
-    } else {
-      if (notes) {
-        newTask.notes = [...task.notes, notes];
-      }
+    if (collaborators) {
+      newTask.collaborators = collaborators;
     }
 
     await task.updateOne(newTask);
@@ -139,14 +133,7 @@ const getTask = async (req, res) => {
   try {
     const task = await Task.findById(id)
       .populate("collaborators", "name email profilePicture")
-      .populate("userId", "name email profilePicture")
-      .populate({
-        path: "notes",
-        populate: {
-          path: "createdBy",
-          select: "name email profilePicture",
-        },
-      });
+      .populate("userId", "name email profilePicture");
 
     if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
 

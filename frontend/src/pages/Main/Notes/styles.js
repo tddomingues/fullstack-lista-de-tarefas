@@ -80,21 +80,42 @@ export const SectionStyles = styled.section`
     border-radius: 0.5rem;
     padding: 1rem;
     margin-top: 2rem;
+    > h2 {
+      padding-bottom: 1rem;
+      font-size: ${({ theme }) => theme.fontSize.lg};
+      font-weight: 500;
+    }
+
+    background-color: ${({ theme }) => theme.colors.neutral300};
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 2rem;
     > div {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       background-color: ${({ theme }) => theme.colors.neutral100};
       border-radius: 0.5rem;
       width: 100%;
       padding: 0.5rem;
-      margin-bottom: 0.25rem;
+      margin-bottom: 2rem;
+      position: relative;
+
+      > .date {
+        position: absolute;
+        top: -1rem;
+        right: 0;
+        color: ${({ theme }) => theme.colors.neutral950};
+        font-size: ${({ theme }) => theme.fontSize.sm};
+        font-weight: 300;
+      }
+
       > img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
       }
-      > div {
+      > .name-comment {
         word-break: break-all;
         width: 100%;
 
@@ -105,6 +126,19 @@ export const SectionStyles = styled.section`
         }
 
         > p {
+          color: ${({ theme }) => theme.colors.neutral950};
+          font-size: ${({ theme }) => theme.fontSize.md};
+          font-weight: 300;
+        }
+      }
+
+      > .date-delete {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 0rem;
+
+        p {
           color: ${({ theme }) => theme.colors.neutral950};
           font-size: ${({ theme }) => theme.fontSize.md};
           font-weight: 300;
