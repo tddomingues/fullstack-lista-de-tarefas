@@ -5,17 +5,18 @@ export const Main = styled.main`
 `;
 
 export const Section = styled.section`
-  background-color: ${({ theme }) => theme.colors.neutral100};
+  background-color: ${({ theme }) => theme.colors.neutral950};
+  color: ${({ theme }) => theme.colors.neutral950};
   height: 100%;
   display: grid;
   place-items: center;
 
   > div {
-    width: 400px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background-color: ${({ theme }) => theme.colors.neutral950};
+    background-color: ${({ theme }) => theme.colors.neutral100};
     padding: 1.5rem 1rem;
     border-radius: 0.5rem;
 
@@ -23,7 +24,6 @@ export const Section = styled.section`
       font-weight: 500;
       text-align: center;
       font-size: ${({ theme }) => theme.fontSize["3xl"]};
-      color: ${({ theme }) => theme.colors.neutral50};
     }
 
     > form {
@@ -49,7 +49,7 @@ export const Section = styled.section`
         //input type text and password
         > input {
           width: 100%;
-          background-color: ${({ theme }) => theme.colors.neutral100};
+          background-color: ${({ theme }) => theme.colors.neutral300};
           padding: 0.5rem;
           border: none;
           border-radius: 0.5rem;
@@ -60,25 +60,20 @@ export const Section = styled.section`
         > span {
           font-weight: 500;
           font-size: ${({ theme }) => theme.fontSize.md};
-          color: ${({ theme }) => theme.colors.neutral50};
         }
       }
 
       //input de submit
       > input {
-        background-color: ${({ theme }) => theme.colors.neutral600};
-        color: ${({ theme }) => theme.colors.neutral50};
-        font-size: ${({ theme }) => theme.fontSize.base};
-        border: none;
-        border-radius: 0.5rem;
+        color: ${(props) => props.theme.colors.neutral50};
+        background-color: ${(props) => props.theme.colors.purple};
         padding: 0.5rem 1rem;
-        cursor: pointer;
+        border-radius: 0.5rem;
+        font-size: ${({ theme }) => theme.fontSize.md};
+        font-weight: 500;
+        border: none;
         margin-top: 2rem;
-        transition: all 0.5s ease-out;
-
-        &:hover {
-          background-color: ${({ theme }) => theme.colors.neutral700};
-        }
+        cursor: pointer;
       }
     }
 
@@ -86,7 +81,6 @@ export const Section = styled.section`
       display: flex;
       justify-content: space-between;
       font-size: ${({ theme }) => theme.fontSize.md};
-      color: ${({ theme }) => theme.colors.neutral50};
 
       > span {
         text-decoration: underline;

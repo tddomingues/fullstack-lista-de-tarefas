@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Section, Main } from "../styles";
 import { useState, useEffect } from "react";
 
+//components
+import MessageError from "../../../components/MessageError/MessageError";
+
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { reset, login } from "../../../slices/authSlice";
@@ -52,11 +55,7 @@ const Login = () => {
                   value={password}
                 />
               </label>
-              {error && (
-                <div className="error-message">
-                  <p>{error}</p>
-                </div>
-              )}
+              {error && <MessageError message={error} />}
               <input type="submit" value="Entrar" />
             </form>
             <div className="redirect-to-login">
