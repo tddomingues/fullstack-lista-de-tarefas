@@ -5,7 +5,8 @@ const taskValidate = yup.object({
     name: yup
       .string()
       .required("O nome é obrigatório.")
-      .min(3, "O nome é muito curto."),
+      .min(3, "O nome é muito curto.")
+      .max(25, "O Nome muito longo."),
     description: yup
       .string()
       .required("Informe explicações sobre o projeto.")

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <StyleFooter>
       <div>
-        <p>2024 Logo, todos os direitos reservados por Tiago Domingues</p>
+        <p>2024, Desenvolvido por Tiago Domingues</p>
         <span
           onClick={() =>
             (window.location.href =

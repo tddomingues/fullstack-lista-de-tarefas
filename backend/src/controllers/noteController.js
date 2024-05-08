@@ -1,14 +1,31 @@
 const Note = require("../models/note");
+const Task = require("../models/task");
 
 const createNote = async (req, res) => {
   const { taskId, comment } = req.body;
 
   try {
-    const note = (
-      await Note.create({ comment, userId: req.userId, taskId })
-    ).populate("userId", "name email");
+    const userId = req.userId;
+    console.log(userId);
+    const task = await Task.findOne({
+      _id: taskId,
+      $or: [{ collaborators: { $in: userId } }, { userId: { $in: userId } }],
+    });
 
-    return res.status(200).json(note);
+    console.log(task);
+
+    if (!task) {
+      return res
+        .status(400)
+        .json({ error: "Você não pode inserir nota nessa tarefa." });
+    }
+
+    const note = (await Note.create({ comment, userId, taskId })).populate(
+      "userId",
+      "name email",
+    );
+
+    return res.status(200).json({ message: "Nota inserida." });
   } catch (error) {
     return res.status(400).json({ error: "Erro ao criar uma nota." });
   }

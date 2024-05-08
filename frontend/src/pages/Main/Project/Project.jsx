@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 //styles
 import { ProfileStyles } from "./styles";
-import Avatar from "../../../assets/perfil.jpg";
 import Perfil from "../../../assets/perfil.jpg";
 
 //router
@@ -19,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 //components
 import Loading from "../../../components/Loading/Loading";
 import { Button } from "../../../components/ui/Button";
+
+//utils
 import { firstCapitalLetter } from "../../../utils/firstCapitalLetter";
 
 const Project = () => {

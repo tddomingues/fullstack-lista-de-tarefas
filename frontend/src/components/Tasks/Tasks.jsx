@@ -15,25 +15,14 @@ import { useNavigate } from "react-router-dom";
 //utils
 import { firstCapitalLetter } from "../../utils/firstCapitalLetter";
 
-//redux
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTask } from "../../slices/taskSlice";
-
 //components
 import { Button } from "../ui/Button";
+import ConfirmDeletion from "../ConfirmDeletion/ConfirmDeletion";
 
 const Tasks = ({ tasks, title, user }) => {
   const navigate = useNavigate();
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [taskId, setTaskId] = useState(null);
-
-  const dispatch = useDispatch();
-
-  const handleDeleteTask = (id) => {
-    dispatch(deleteTask(id));
-
-    window.location.reload();
-  };
 
   return (
     <TasksStyles>
@@ -75,12 +64,6 @@ const Tasks = ({ tasks, title, user }) => {
                 <td className="status">{firstCapitalLetter(task.status)}</td>
                 <td className="buttons">
                   <Button
-                    type="indigo"
-                    onClick={() => navigate(`/project/${task._id}`)}
-                  >
-                    <MdOutlineOpenInNew />
-                  </Button>
-                  <Button
                     type="red"
                     onClick={() => {
                       setConfirmDeletion(!confirmDeletion);
@@ -90,37 +73,24 @@ const Tasks = ({ tasks, title, user }) => {
                   >
                     <MdDeleteOutline />
                   </Button>
+                  <Button
+                    type="indigo"
+                    onClick={() => navigate(`/project/${task._id}`)}
+                  >
+                    <MdOutlineOpenInNew />
+                  </Button>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
       {confirmDeletion && (
-        <div className="confirm-deletion">
-          <div>
-            <div className="title">
-              <h3>Deletar Tarefa</h3>
-            </div>
-            <div className="description">
-              <p>
-                Você tem certeza que deseja excluir permanentemente essa tarefa
-                ?
-              </p>
-            </div>
-            <div className="buttons">
-              <Button
-                type="neutral50"
-                onClick={() => setConfirmDeletion(false)}
-                style={{ color: "black" }}
-              >
-                Cancelar
-              </Button>
-              <Button type="purple" onClick={() => handleDeleteTask(taskId)}>
-                Deletar
-              </Button>
-            </div>
-          </div>
-        </div>
+        <ConfirmDeletion
+          type="task"
+          title="Tarefa"
+          description="tarefa"
+          id={taskId}
+        />
       )}
     </TasksStyles>
   );

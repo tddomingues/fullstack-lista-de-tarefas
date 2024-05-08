@@ -5,7 +5,8 @@ const registerValidation = yup.object({
     name: yup
       .string()
       .required("O nome é obrigatório.")
-      .min(3, "O nome é muito curto."),
+      .min(3, "O nome é muito curto.")
+      .max(20, "O nome é muito longo."),
     email: yup
       .string()
       .required("O e-mail é obrigatório.")
@@ -42,7 +43,7 @@ const updateValidation = yup.object({
     confirmPassword: yup
       .string()
       .min(3, "Senha curta.")
-      .oneOf([yup.ref("password"), null], "Senhas não correspondentes!."),
+      .oneOf([yup.ref("password"), null], "Senhas não correspondentes."),
   }),
 });
 

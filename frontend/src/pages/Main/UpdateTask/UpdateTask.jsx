@@ -23,7 +23,6 @@ import { Button } from "../../../components/ui/Button";
 const UpdateTask = () => {
   const { task, success, error, loading } = useSelector((state) => state.task);
   const { users } = useSelector((state) => state.user);
-  const { user: sliceUser } = useSelector((state) => state.auth);
 
   const [user] = useOutletContext();
 

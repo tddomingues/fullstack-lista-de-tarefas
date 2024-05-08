@@ -143,7 +143,7 @@ const getTask = async (req, res) => {
   }
 };
 
-//buscar tarefa(s) por pesquisa
+//buscar tarefa(s) por pesquisa que pertencem a min
 const getTaskBySearch = async (req, res) => {
   const { search } = req.query;
 

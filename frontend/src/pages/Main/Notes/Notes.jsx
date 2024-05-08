@@ -1,26 +1,31 @@
+import { useEffect, useState } from "react";
+
+//components
 import { Button } from "../../../components/ui/Button";
 import Loading from "../../../components/Loading/Loading";
 import MessageError from "../../../components/MessageError/MessageError";
+import ConfirmDeletion from "../../../components/ConfirmDeletion/ConfirmDeletion";
+
+//styles
 import { SectionStyles } from "./styles";
 import { MdDeleteOutline } from "react-icons/md";
 import Avatar from "../../../assets/perfil.jpg";
-import { useEffect, useState } from "react";
+
+//redux
 import { useDispatch, useSelector } from "react-redux";
+import { createNote, getNotesByTask, reset } from "../../../slices/noteSlice";
+
+//router
 import { useNavigate, useParams } from "react-router-dom";
 
 //conversor de horas
 import moment from "moment";
 import "moment/locale/pt-br";
 
-import {
-  createNote,
-  deleteNote,
-  getNotesByTask,
-  reset,
-} from "../../../slices/noteSlice";
-
 const Notes = () => {
   const [comment, setComment] = useState("");
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+  const [noteId, setNoteId] = useState(undefined);
 
   const dispatch = useDispatch();
 
@@ -30,21 +35,12 @@ const Notes = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  console.log(success, loading);
-
-  const handleTaskDelete = (id) => {
-    dispatch(deleteNote(id));
-    window.location.reload();
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       comment,
       taskId: id,
     };
-
-    console.log(data);
 
     dispatch(createNote(data));
   };
@@ -105,13 +101,27 @@ const Notes = () => {
                 <p>{note.comment}</p>
               </div>
               {note.userId?._id === user.userId && (
-                <Button type="red" onClick={() => handleTaskDelete(note._id)}>
+                <Button
+                  type="red"
+                  onClick={() => {
+                    setConfirmDeletion(!confirmDeletion);
+                    setNoteId(note._id);
+                  }}
+                >
                   <MdDeleteOutline />
                 </Button>
               )}
             </div>
           ))}
         </div>
+      )}
+      {confirmDeletion && (
+        <ConfirmDeletion
+          type="note"
+          title="Nota"
+          description="nota"
+          id={noteId}
+        />
       )}
     </SectionStyles>
   );
