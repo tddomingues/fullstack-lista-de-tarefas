@@ -22,7 +22,12 @@ router.get("/userTasks", tokenValidate, getTasksByUser);
 router.get("/task/:id", tokenValidate, getTask);
 router.get("/collaborationTasks", tokenValidate, getTasksDoneCollaboratively);
 router.get("/search", tokenValidate, getTaskBySearch);
-router.put("/updateTask/:id", tokenValidate, updateTask);
+router.put(
+  "/updateTask/:id",
+  tokenValidate,
+  validate(taskValidate),
+  updateTask,
+);
 router.delete("/deleteTask/:id", tokenValidate, deleteTask);
 
 module.exports = router;

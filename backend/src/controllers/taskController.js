@@ -150,7 +150,10 @@ const getTaskBySearch = async (req, res) => {
   const searchForLowerCase = search.toLowerCase();
 
   try {
-    const task = await Task.find({ name: { $eq: searchForLowerCase } })
+    const task = await Task.find({
+      name: { $eq: searchForLowerCase },
+      userId: { $eq: req.userId },
+    })
       .populate("collaborators", "name email profilePicture")
       .populate("userId", "name email profilePicture");
 

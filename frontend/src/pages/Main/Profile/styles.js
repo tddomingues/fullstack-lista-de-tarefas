@@ -4,21 +4,10 @@ export const ProfileStyles = styled.section`
   padding: 2rem 0rem;
   border-radius: 0.5rem;
 
-  img {
-    height: 120px;
-    width: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
   form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-
-    > .img {
-      margin-bottom: 1rem;
-    }
 
     > label {
       display: flex;
@@ -43,49 +32,53 @@ export const ProfileStyles = styled.section`
     }
   }
 
-  input[type="submit"],
-  input[type="button"] {
+  input[type="submit"] {
     border: none;
     color: ${(props) => props.theme.colors.neutral50};
     background-color: ${(props) => props.theme.colors.purple};
     font-size: ${(props) => props.theme.fontSize.md};
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    font-weight: 400;
+    font-weight: 500;
     align-self: start;
-    margin-top: 1rem;
+
     cursor: pointer;
   }
 
-  > .info {
+  > .profile {
     position: relative;
-    height: 350px;
+    height: 320px;
     background-color: bisque;
 
-    > div {
+    > .data {
       position: absolute;
       width: 80%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 1rem;
       background-color: ${({ theme }) => theme.colors.neutral200};
       top: 70%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 1rem;
+      padding: 2rem;
       border-radius: 0.5rem;
-    }
 
-    button {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
+      .profilePicture {
+        margin-bottom: 1rem;
+        > img {
+          height: 120px;
+          width: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
 
-      > svg {
-        margin-top: 0;
-        font-size: ${({ theme }) => theme.fontSize.xl};
+      > button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+
+        > svg {
+          margin: 0 0 0 4px;
+          font-size: ${({ theme }) => theme.fontSize.xl};
+        }
       }
     }
   }
@@ -108,15 +101,8 @@ export const ProfileStyles = styled.section`
         position: relative;
         width: 200px;
         height: 200px;
-        background: ${({ theme }) => theme.colors.neutral200};
-        display: flex;
-        align-items: center;
-        justify-content: end;
-        color: ${({ theme }) => theme.colors.neutral400};
-        border: 2px dashed currentcolor;
+        border: 2px dashed ${({ theme }) => theme.colors.neutral400};
         cursor: pointer;
-        font-family: sans-serif;
-
         outline: none;
         overflow: hidden;
 
@@ -133,11 +119,12 @@ export const ProfileStyles = styled.section`
           > img {
             height: 100%;
             width: 100%;
+            object-fit: cover;
             border-radius: 0;
           }
         }
 
-        > .icon {
+        > .iconInsertPhoto {
           position: absolute;
           top: 50%;
           left: 50%;
@@ -145,19 +132,45 @@ export const ProfileStyles = styled.section`
 
           > svg {
             font-size: ${({ theme }) => theme.fontSize["3xl"]};
-            color: ${({ theme }) => theme.colors.neutral800};
+            color: ${({ theme }) => theme.colors.neutral500};
           }
         }
       }
 
-      > div {
+      > .buttons {
+        margin-top: 2rem;
         display: flex;
         justify-content: space-between;
+
+        > button {
+          color: ${({ theme }) => theme.colors.neutral950};
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    > .profile {
+      > .data {
+        padding: 1rem;
+        width: 90%;
+
+        .profilePicture {
+          > img {
+            height: 100px;
+            width: 100px;
+          }
+        }
       }
     }
 
-    button {
-      margin-top: 1rem;
+    > .update {
+      > form {
+        > .picture {
+          width: 150px;
+          height: 150px;
+        }
+      }
     }
   }
 `;

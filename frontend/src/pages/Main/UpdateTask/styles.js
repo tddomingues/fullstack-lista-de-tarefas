@@ -21,12 +21,12 @@ export const UpdateStyles = styled.section`
       flex-direction: column;
       gap: 1rem;
 
-      > div:nth-child(2) {
+      > .collaborators {
         display: flex;
         flex-direction: column;
         gap: 1rem;
 
-        > div {
+        > .searchForCollaborators {
           display: flex;
           align-items: end;
           gap: 0.25rem;
@@ -36,11 +36,13 @@ export const UpdateStyles = styled.section`
           }
         }
 
-        .collaborators {
+        > .listOfCollaborators {
           background-color: ${({ theme }) => theme.colors.neutral100};
           border-radius: 0.5rem;
           padding: 0.5rem;
-          > div {
+          display: flex;
+          flex-wrap: wrap;
+          > .collaborator {
             display: flex;
             align-items: center;
             justify-content: start;
@@ -75,7 +77,7 @@ export const UpdateStyles = styled.section`
         }
       }
 
-      > div:nth-child(3) {
+      > .priority-status {
         display: flex;
         align-items: end;
         gap: 1rem;
@@ -84,6 +86,11 @@ export const UpdateStyles = styled.section`
       > .buttons {
         display: flex;
         justify-content: space-between;
+        margin-top: 2rem;
+
+        > button {
+          color: ${(props) => props.theme.colors.neutral950};
+        }
       }
 
       label {
@@ -115,8 +122,7 @@ export const UpdateStyles = styled.section`
         }
       }
 
-      input[type="submit"],
-      input[type="button"] {
+      input[type="submit"] {
         border: none;
         color: ${(props) => props.theme.colors.neutral50};
         background-color: ${(props) => props.theme.colors.purple};
@@ -125,7 +131,7 @@ export const UpdateStyles = styled.section`
         border-radius: 0.5rem;
         font-weight: 400;
         align-self: start;
-        margin-top: 1rem;
+
         cursor: pointer;
       }
     }

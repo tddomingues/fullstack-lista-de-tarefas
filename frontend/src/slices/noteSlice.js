@@ -71,12 +71,10 @@ export const noteSlice = createSlice({
       })
       .addCase(getNotesByTask.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.notes = action.payload;
       })
       .addCase(getNotesByTask.rejected, (state, action) => {
         state.error = action.payload;
-        state.success = false;
         state.loading = false;
         state.notes = [];
       })

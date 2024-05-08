@@ -21,4 +21,17 @@ export const StyleFooter = styled.footer`
       }
     }
   }
+
+  @media screen and (max-width: 1199px) {
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 1rem;
+
+    > div {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
 `;

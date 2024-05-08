@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const TaskStyles = styled.section`
+export const CreateTaskStyles = styled.section`
   padding: 2rem 0rem;
   border-radius: 0.5rem;
 
-  > .creation-form {
+  > .create-task-form {
     background-color: ${({ theme }) => theme.colors.neutral300};
     border-radius: 0.5rem;
     padding: 1rem;
@@ -19,16 +19,14 @@ export const TaskStyles = styled.section`
     > form {
       display: flex;
       flex-direction: column;
-
       gap: 1rem;
 
-      > div:nth-child(2) {
+      > .collaborators {
         display: flex;
-
         flex-direction: column;
         gap: 0.5rem;
 
-        > div {
+        > .input-collaborators {
           display: flex;
           align-items: end;
           flex-wrap: wrap;
@@ -39,7 +37,7 @@ export const TaskStyles = styled.section`
           }
         }
 
-        .collaborators {
+        .collaboratorsList {
           background-color: ${({ theme }) => theme.colors.neutral100};
           border-radius: 0.5rem;
           padding: 0.5rem;
@@ -79,7 +77,7 @@ export const TaskStyles = styled.section`
         }
       }
 
-      > div:nth-child(3) {
+      > .priority-status {
         display: flex;
         align-items: end;
         gap: 1rem;
@@ -88,6 +86,24 @@ export const TaskStyles = styled.section`
       > .buttons {
         display: flex;
         justify-content: space-between;
+        margin-top: 1rem;
+
+        > button {
+          color: ${(props) => props.theme.colors.neutral950};
+        }
+
+        > input[type="submit"] {
+          border: none;
+          color: ${(props) => props.theme.colors.neutral50};
+          background-color: ${(props) => props.theme.colors.purple};
+          font-size: ${(props) => props.theme.fontSize.md};
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          font-weight: 500;
+          align-self: start;
+
+          cursor: pointer;
+        }
       }
 
       label {
@@ -99,7 +115,9 @@ export const TaskStyles = styled.section`
           font-weight: 500;
         }
 
-        > input,
+        input[type="text"],
+        input[type="search"],
+        input[type="date"],
         textarea,
         select,
         option {
@@ -117,20 +135,6 @@ export const TaskStyles = styled.section`
         > input[type="date"] {
           width: 10rem;
         }
-      }
-
-      input[type="submit"],
-      input[type="button"] {
-        border: none;
-        color: ${(props) => props.theme.colors.neutral50};
-        background-color: ${(props) => props.theme.colors.purple};
-        font-size: ${(props) => props.theme.fontSize.md};
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 400;
-        align-self: start;
-        margin-top: 1rem;
-        cursor: pointer;
       }
     }
   }

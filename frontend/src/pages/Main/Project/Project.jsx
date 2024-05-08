@@ -42,7 +42,7 @@ const Project = () => {
   return (
     <ProfileStyles>
       {task && (
-        <div className="info">
+        <div className="data">
           <h2>Informações do Projeto</h2>
           <form>
             <label>
@@ -61,9 +61,9 @@ const Project = () => {
               ></textarea>
             </label>
             {task.collaborators?.length > 0 && (
-              <div className="collaborators--active">
+              <div className="collaborators">
                 <span>Colaboradores</span>
-                <div className="collaborators">
+                <div className="listOfCollaborators">
                   {task.collaborators.map((collaborator) => (
                     <div key={collaborator._id}>
                       <img
@@ -85,7 +85,7 @@ const Project = () => {
             )}
             <div className="creator">
               <span>Criador</span>
-              <div className="collaborators">
+              <div className="creator-data">
                 <div>
                   <img
                     src={
@@ -161,7 +161,7 @@ const Project = () => {
             </div>
           </form>
           <div className="buttons">
-            <Button type="purple" onClick={() => navigate("/")}>
+            <Button type="neutral50" onClick={() => navigate("/")}>
               Voltar
             </Button>
             <div>

@@ -18,10 +18,7 @@ const fetchCreateNote = async (user, data) => {
     BASE_URL + "/createNote",
     fetchConfig("POST", data, user.token),
   )
-    .then((res) => {
-      location.reload();
-      return res.json();
-    })
+    .then((res) => res.json())
     .catch((err) => err);
 
   return res;

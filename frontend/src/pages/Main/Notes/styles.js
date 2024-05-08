@@ -10,7 +10,7 @@ export const SectionStyles = styled.section`
     font-weight: 500;
   }
 
-  > .info {
+  > .create-note {
     background-color: ${({ theme }) => theme.colors.neutral300};
     border-radius: 0.5rem;
     padding: 1rem;
@@ -45,32 +45,28 @@ export const SectionStyles = styled.section`
         }
       }
 
-      input[type="submit"] {
-        border: none;
-        color: ${(props) => props.theme.colors.neutral50};
-        background-color: ${(props) => props.theme.colors.purple};
-        font-size: ${(props) => props.theme.fontSize.md};
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 400;
-        align-self: start;
-        margin-top: 1rem;
-        cursor: pointer;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-
-      > div {
+      > .buttons {
         display: flex;
         align-items: end;
-        gap: 1rem;
-      }
-      button {
-        margin-top: 1rem;
+        justify-content: space-between;
+
+        > input[type="submit"] {
+          border: none;
+          color: ${(props) => props.theme.colors.neutral50};
+          background-color: ${(props) => props.theme.colors.purple};
+          font-size: ${(props) => props.theme.fontSize.md};
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          font-weight: 500;
+          align-self: start;
+          margin-top: 1rem;
+          cursor: pointer;
+        }
+
+        > button {
+          margin-top: 1rem;
+          color: ${(props) => props.theme.colors.neutral950};
+        }
       }
     }
   }
@@ -80,17 +76,8 @@ export const SectionStyles = styled.section`
     border-radius: 0.5rem;
     padding: 1rem;
     margin-top: 2rem;
-    > h2 {
-      padding-bottom: 1rem;
-      font-size: ${({ theme }) => theme.fontSize.lg};
-      font-weight: 500;
-    }
 
-    background-color: ${({ theme }) => theme.colors.neutral300};
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-top: 2rem;
-    > div {
+    > .listOfNotes {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -101,7 +88,7 @@ export const SectionStyles = styled.section`
       margin-bottom: 2rem;
       position: relative;
 
-      > .date {
+      > .createdAt {
         position: absolute;
         top: -1rem;
         right: 0;
@@ -114,11 +101,12 @@ export const SectionStyles = styled.section`
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        object-fit: cover;
       }
+
       > .name-comment {
         word-break: break-all;
-        width: 100%;
-
+        flex: 1;
         > h4 {
           padding-bottom: 0.125rem;
           font-size: ${({ theme }) => theme.fontSize.md};
@@ -132,16 +120,9 @@ export const SectionStyles = styled.section`
         }
       }
 
-      > .date-delete {
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        gap: 0rem;
-
-        p {
-          color: ${({ theme }) => theme.colors.neutral950};
-          font-size: ${({ theme }) => theme.fontSize.md};
-          font-weight: 300;
+      > button {
+        > svg {
+          margin-top: 0;
         }
       }
     }

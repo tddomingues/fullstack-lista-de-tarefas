@@ -39,7 +39,7 @@ const Search = () => {
 
   return (
     <SectionStyles>
-      <div>
+      <div className="btn-createTask">
         <Button type="purple" onClick={() => navigate("/new-task")}>
           <LuPlus />
         </Button>

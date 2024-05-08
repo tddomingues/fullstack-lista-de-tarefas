@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 //styles
-import { TaskStyles } from "./styles";
+import { CreateTaskStyles } from "./styles";
 import Perfil from "../../../assets/perfil.jpg";
 import { MdOutlineClear } from "react-icons/md";
 
@@ -17,6 +17,7 @@ import { createTask, reset } from "../../../slices/taskSlice";
 import MessageSuccess from "../../../components/MessageSuccess/MessageSuccess";
 import Message from "../../../components/MessageError/MessageError";
 import AddColaborator from "../../../components/AddColaborator/AddColaborator";
+import { Button } from "../../../components/ui/Button";
 
 const CreateTask = () => {
   const [name, setName] = useState("");
@@ -77,9 +78,9 @@ const CreateTask = () => {
   if (user === null) return window.location.reload();
 
   return (
-    <TaskStyles>
+    <CreateTaskStyles>
       {!success ? (
-        <div className="creation-form">
+        <div className="create-task-form">
           <h2>Criar Tarefa</h2>
           <form onSubmit={handleSubmit}>
             <label>
@@ -91,8 +92,8 @@ const CreateTask = () => {
               />
             </label>
 
-            <div>
-              <div>
+            <div className="collaborators">
+              <div className="input-collaborators">
                 <label>
                   <span>Pesquise por Colaborador(es/as)</span>
                   <input
@@ -115,7 +116,7 @@ const CreateTask = () => {
                 />
               </div>
               {collaborators.length > 0 && (
-                <div className="collaborators">
+                <div className="collaboratorsList">
                   {collaborators.map((collaborator) => (
                     <div key={collaborator._id}>
                       <img
@@ -141,7 +142,7 @@ const CreateTask = () => {
               )}
             </div>
 
-            <div>
+            <div className="priority-status">
               <label>
                 <span>Prioridade</span>
                 <select
@@ -204,12 +205,10 @@ const CreateTask = () => {
               />
             )}
             <div className="buttons">
-              <input
-                type="button"
-                value="Voltar"
-                className="btn-submit"
-                onClick={() => navigate("/")}
-              />
+              <Button onClick={() => navigate("/")} type="neutral50">
+                Voltar
+              </Button>
+
               <input type="submit" value="Criar" className="btn-submit" />
             </div>
           </form>
@@ -217,7 +216,7 @@ const CreateTask = () => {
       ) : (
         <MessageSuccess type="task" text={name} />
       )}
-    </TaskStyles>
+    </CreateTaskStyles>
   );
 };
 

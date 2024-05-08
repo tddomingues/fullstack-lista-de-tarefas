@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const updateUser = async (req, res) => {
   const { name, password, confirmPassword } = req.body;
-  console.log(req.file?.filename);
+  console.log(req.file);
   try {
     const userId = req.userId;
 

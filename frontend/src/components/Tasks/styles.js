@@ -1,27 +1,21 @@
 import styled from "styled-components";
 
-export const PriorityStyles = styled.td`
-  > span {
-    background-color: ${(props) =>
-      props.priority === "baixa"
-        ? props.theme.colors.blue
-        : props.priority === "média"
-          ? props.theme.colors.yellow
-          : props.theme.colors.red};
-    padding: 0.25rem;
-    text-align: center;
-    border-radius: 0.25rem;
-    color: ${({ theme }) => theme.colors.neutral50};
-  }
-`;
-
 export const TasksStyles = styled.div`
+  background-color: ${({ theme }) => theme.colors.neutral100};
+  margin: 0.8rem auto;
+  border-radius: 0.5rem;
+  overflow: overlay;
+
   > table {
     width: 100%;
+    height: 100%;
     border-collapse: collapse;
-    background-color: ${({ theme }) => theme.colors.neutral300};
-    border-radius: 0.5rem;
 
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+    }
     > caption {
       text-align: start;
       padding-bottom: 0.125rem;
@@ -30,54 +24,67 @@ export const TasksStyles = styled.div`
     }
 
     > thead {
+      background-color: ${({ theme }) => theme.colors.neutral300};
       > tr {
         > th {
-          padding: 0.5rem;
-          text-align: start;
           font-weight: 400;
           font-size: ${({ theme }) => theme.fontSize.base};
-          border: none;
         }
       }
     }
 
     > tbody {
-      background-color: ${({ theme }) => theme.colors.neutral200};
-
       > tr {
-        border-top: 1px solid ${({ theme }) => theme.colors.neutral300};
-
         > td {
-          padding: 0.5rem;
-          text-align: start;
           font-weight: 400;
-          font-size: ${({ theme }) => theme.fontSize.md};
+          border-bottom: 1px solid ${({ theme }) => theme.colors.neutral300};
 
+          font-size: ${({ theme }) => theme.fontSize.md};
+          min-width: 150px;
           > svg {
             font-size: ${({ theme }) => theme.fontSize.lg};
           }
         }
 
-        > .buttons {
-          width: 50px;
+        > .deadline {
+          min-width: 80px;
+        }
 
+        > .priority {
+          min-width: 20px;
+        }
+
+        > .status {
+          min-width: 120px;
+        }
+
+        > .buttons {
+          min-width: 160px;
           > button {
+            float: right;
+            margin-right: 0.5rem;
             > svg {
               margin-top: 0;
             }
           }
+
+          > button:nth-child(1) {
+            margin-right: 0rem;
+          }
         }
 
         > .creator {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-
+          min-width: 90px;
           > img {
+            vertical-align: middle;
             width: 30px;
             height: 30px;
             object-fit: cover;
             border-radius: 50%;
+          }
+
+          > span {
+            margin-left: 0.25rem;
           }
         }
       }
@@ -92,8 +99,9 @@ export const TasksStyles = styled.div`
     background-color: ${({ theme }) => theme.colors.neutral950_transparent};
     width: 100%;
     height: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     > div {
       width: 300px;
 
@@ -132,6 +140,21 @@ export const TasksStyles = styled.div`
         justify-content: space-between;
         gap: 1rem;
         align-items: end;
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    > table {
+      th:nth-child(2),
+      th:nth-child(3),
+      th:nth-child(4),
+      th:nth-child(5),
+      td:nth-child(2),
+      td:nth-child(3),
+      td:nth-child(4),
+      td:nth-child(5) {
+        display: none;
       }
     }
   }

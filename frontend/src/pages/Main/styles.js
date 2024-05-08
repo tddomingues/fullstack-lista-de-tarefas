@@ -8,4 +8,8 @@ export const Main = styled.main`
 export const Container = styled.div`
   padding: 1rem 4rem;
   flex: 1;
+
+  @media screen and (max-width: 1199px) {
+    padding: 1rem;
+  }
 `;

@@ -44,10 +44,8 @@ const Tasks = ({ tasks, title, user }) => {
             <th>Nome</th>
             <th>Criador</th>
             <th>Prazo de Conclusão</th>
-
             <th>Prioridade</th>
             <th>Status</th>
-            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -65,14 +63,16 @@ const Tasks = ({ tasks, title, user }) => {
                     }
                     alt={task.name}
                   />
-                  <p>{task.userId?.name}</p>
+                  <span>{task.userId?.name}</span>
                 </td>
-                <td>{moment(task.deadline).format("DD/MM/YYYY")}</td>
+                <td className="deadline">
+                  {moment(task.deadline).format("DD/MM/YYYY")}
+                </td>
 
-                <td>
+                <td className="priority">
                   <span>{firstCapitalLetter(task.priority)}</span>
                 </td>
-                <td>{firstCapitalLetter(task.status)}</td>
+                <td className="status">{firstCapitalLetter(task.status)}</td>
                 <td className="buttons">
                   <Button
                     type="indigo"
@@ -80,8 +80,6 @@ const Tasks = ({ tasks, title, user }) => {
                   >
                     <MdOutlineOpenInNew />
                   </Button>
-                </td>
-                <td className="buttons">
                   <Button
                     type="red"
                     onClick={() => {

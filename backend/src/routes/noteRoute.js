@@ -10,8 +10,10 @@ const {
 
 //middlewares
 const tokenValidate = require("../middlewares/tokenValidate");
+const { noteValidate } = require("../middlewares/noteValidate");
+const validate = require("../middlewares/validate");
 
-router.post("/createNote", tokenValidate, createNote);
+router.post("/createNote", tokenValidate, validate(noteValidate), createNote);
 router.get("/note/:taskId", tokenValidate, getNotesByTask);
 router.delete("/note/:id", tokenValidate, deleteNote);
 

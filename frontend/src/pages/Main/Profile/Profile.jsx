@@ -72,10 +72,10 @@ const Profile = () => {
   return (
     <ProfileStyles>
       {!updateData ? (
-        <div className="info">
-          <div>
+        <div className="profile">
+          <div className="data">
             <form>
-              <label className="img">
+              <label className="profilePicture">
                 <img
                   src={
                     !userSlice.profilePicture
@@ -89,10 +89,10 @@ const Profile = () => {
                 <span>Nome</span>
                 <input type="text" disabled value={userSlice.name} />
               </label>
-              <label>
+              {/* <label>
                 <span>Cargo</span>
                 <input type="text" disabled value="Gerente" />
-              </label>
+              </label> */}
               <label>
                 <span>Email</span>
                 <input type="text" disabled value={userSlice.email} />
@@ -119,7 +119,7 @@ const Profile = () => {
                   alt={userSlice.profilePicture && userSlice.name}
                 />
               </span>
-              <span className="icon">
+              <span className="iconInsertPhoto">
                 <MdOutlineAddAPhoto />
               </span>
             </label>
@@ -156,13 +156,11 @@ const Profile = () => {
                 sliceType="user"
               />
             )}
-            <div>
-              <input
-                type="button"
-                value="Voltar"
-                className="btn-submit"
-                onClick={() => window.location.reload()}
-              />
+            <div className="buttons">
+              <Button onClick={() => window.location.reload()} type="neutral50">
+                Voltar
+              </Button>
+
               <input type="submit" value="Atualizar" className="btn-submit" />
             </div>
           </form>
