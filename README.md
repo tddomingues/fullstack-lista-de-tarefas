@@ -8,10 +8,6 @@
   <img src="https://i.imgur.com/wigva74.png">
 </p>
 
-<p align="center">
-  <img src="https://github.com/tddomingues/fullstack-lista-de-tarefas/assets/129981877/a2076a59-42f0-4860-a718-1283646ac231/>
-</p>
-
 ![preview](https://github.com/tddomingues/fullstack-lista-de-tarefas/assets/129981877/a2076a59-42f0-4860-a718-1283646ac231)
 
 
@@ -80,6 +76,7 @@ npm run server
 ## DESENVOLVEDOR
 <p>Elaborado por Tiago Domingues</p>
 <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" href="https://www.linkedin.com/in/tiago3domingues"/>
-[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]()
+[![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tiago3domingues)
+
 
 
