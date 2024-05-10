@@ -40,7 +40,7 @@ Crie, exclua, edite e pesquise suas próprias tarefas conforme necessário. Cola
 ## INSTALAÇÃO
 ### Clone:
 ```bash
-git clone https://github.com/tddomingues/fullstack-lista-de-tarefas
+git clone https://github.com/tddomingues/fullstack-lista-de-tarefas.git
 ````
 
 ### Acesse o diretório front-end:
