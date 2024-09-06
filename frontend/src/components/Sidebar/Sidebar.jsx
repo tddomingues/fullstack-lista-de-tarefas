@@ -32,8 +32,8 @@ const Navbar = () => {
   return (
     <HeaderStyles menuisclosed={menuIsClosed}>
       <div className="nav">
-        <div>
-          <Link to="/">Logo</Link>
+        <div className="logo">
+          <Link to="/">ORGANIZE</Link>
         </div>
         <nav className="menu-desktop">
           <ul>

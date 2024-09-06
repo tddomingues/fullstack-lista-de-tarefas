@@ -24,10 +24,10 @@ export const HeaderStyles = styled.header`
       }
     }
 
-    > div {
+    > .logo {
       a {
         font-size: ${({ theme }) => theme.fontSize.xl};
-        font-weight: 600;
+        font-weight: 800;
       }
     }
 

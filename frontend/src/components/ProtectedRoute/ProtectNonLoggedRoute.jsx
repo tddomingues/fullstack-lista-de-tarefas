@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 //router
 import { useNavigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectNonLoggedRoute = ({ children }) => {
   const { user } = useSelector((state) => state.auth);
+
+  console.log("user ", user);
 
   const navigate = useNavigate();
 
@@ -20,4 +22,4 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-export default ProtectedRoute;
+export default ProtectNonLoggedRoute;

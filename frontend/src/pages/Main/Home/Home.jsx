@@ -29,7 +29,7 @@ const Home = () => {
     dispatch(getTasksByUser());
   }, [dispatch]);
 
-  if (user === null) return window.location.reload();
+  if (user === null) return navigate("/auth/login");
 
   if (loading) return <Loading />;
 
