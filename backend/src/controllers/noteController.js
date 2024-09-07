@@ -6,28 +6,23 @@ const createNote = async (req, res) => {
 
   try {
     const userId = req.userId;
-    console.log(userId);
+
     const task = await Task.findOne({
       _id: taskId,
       $or: [{ collaborators: { $in: userId } }, { userId: { $in: userId } }],
     });
 
-    console.log(task);
-
     if (!task) {
       return res
-        .status(400)
+        .status(403)
         .json({ error: "Você não pode inserir nota nessa tarefa." });
     }
 
-    const note = (await Note.create({ comment, userId, taskId })).populate(
-      "userId",
-      "name email",
-    );
+    await Note.create({ comment, userId, taskId });
 
-    return res.status(200).json({ message: "Nota inserida." });
+    return res.status(201).json({ message: "Nota inserida." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao criar uma nota." });
+    return res.status(500).json({ error: "Erro ao criar uma nota." });
   }
 };
 
@@ -41,7 +36,7 @@ const getNotesByTask = async (req, res) => {
 
     return res.status(200).json(notes);
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a nota." });
+    return res.status(500).json({ error: "Erro ao procurar a nota." });
   }
 };
 
@@ -52,14 +47,14 @@ const deleteNote = async (req, res) => {
     const note = await Note.findOne({ _id: id });
 
     if (note.userId.toHexString() !== req.userId) {
-      return res.status(400).json({ error: "Essa nota não pertence a você." });
+      return res.status(403).json({ error: "Essa nota não pertence a você." });
     }
 
     await Note.deleteOne({ _id: id });
 
-    return res.status(200).json(note);
+    return res.status(200).json({ message: "Nota excluida com sucesso." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a nota." });
+    return res.status(500).json({ error: "Erro ao procurar a nota." });
   }
 };
 

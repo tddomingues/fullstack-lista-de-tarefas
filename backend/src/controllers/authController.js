@@ -10,10 +10,9 @@ const register = async (req, res) => {
     const userExists = await User.findOne({
       $or: [{ email: { $eq: email } }, { name: { $eq: name } }],
     });
-    console.log(userExists);
 
     if (userExists) {
-      return res.status(400).json({ error: "Usuário/E-mail existente." });
+      return res.status(409).json({ error: "Usuário/E-mail existente." });
     }
 
     if (password !== confirmPassword)
@@ -27,14 +26,11 @@ const register = async (req, res) => {
       password: cryptoPassword,
     });
 
-    //const SECRET_KEY = process.env.SECRET_KEY
     const userId = user._id;
 
-    //const token = jwt.sign({userId}, SECRET_KEY, {expiresIn: "70m"})
-
-    return res.status(200).json({ userId });
+    return res.status(201).json({ userId });
   } catch (error) {
-    return res.status(400).json({ error: "Erro no cadastro do usuário." });
+    return res.status(500).json({ error: "Erro no cadastro do usuário." });
   }
 };
 
@@ -45,12 +41,12 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user)
-      return res.status(400).json({ error: "Usuário não registrado." });
+      return res.status(401).json({ error: "Usuário não registrado." });
 
     const comparePasswords = await bcrypt.compare(password, user.password);
 
     if (!comparePasswords)
-      return res.status(400).json({ error: "Senha inválida." });
+      return res.status(401).json({ error: "Senha inválida." });
 
     const SECRET_KEY = process.env.SECRET_KEY;
     const userId = user._id;
@@ -59,7 +55,7 @@ const login = async (req, res) => {
 
     return res.status(200).json({ userId: user._id, token });
   } catch (error) {
-    return res.status(400).json({ error: "Erro no login do usuário" });
+    return res.status(500).json({ error: "Erro no login do usuário" });
   }
 };
 

@@ -23,9 +23,14 @@ const createTask = async (req, res) => {
       collaborators,
     });
 
-    return res.status(200).json({ message: "Tarefa criada com sucesso." });
+    /*
+    Obs: o mongoose converte a string de userId para mongoose.Schema.Types.ObjectId
+    sem usar 'new mongoose.Types.ObjectId("64f9c2f6e4bfa0123456789a")'.
+    */
+
+    return res.status(201).json({ message: "Tarefa criada com sucesso." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao criar uma tarefa" });
+    return res.status(500).json({ error: "Erro ao criar uma tarefa" });
   }
 };
 
@@ -46,11 +51,15 @@ const updateTask = async (req, res) => {
   try {
     const task = await Task.findOne({ _id: id });
 
+    if (!task) {
+      return res.status(404).json({ error: "Essa tarefa não existe." });
+    }
+
     let newTask = {};
 
     if (req.userId !== ownerId) {
       return res
-        .status(400)
+        .status(403)
         .json({ error: "Você não tem permissão para atualizar essa tarefa." });
     }
 
@@ -83,7 +92,7 @@ const updateTask = async (req, res) => {
 
     return res.status(200).json({ message: "Tarefa atualizada com sucesso." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao atualizar a tarefa." });
+    return res.status(500).json({ error: "Erro ao atualizar a tarefa." });
   }
 };
 
@@ -91,14 +100,16 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   const { id } = req.params;
 
-  console.log(id);
-
   try {
     const task = await Task.findOne({ _id: id });
 
+    if (!task) {
+      return res.status(404).json({ error: "Essa tarefa não existe." });
+    }
+
     if (task.userId.toHexString() !== req.userId) {
       return res
-        .status(400)
+        .status(403)
         .json({ error: "Essa tarefa não pode ser apagada por você." });
     }
 
@@ -106,11 +117,12 @@ const deleteTask = async (req, res) => {
 
     return res.status(200).json({ message: "Tarefa apagada com sucesso." });
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao deletar a tarefa." });
+    return res.status(500).json({ error: "Erro ao deletar a tarefa." });
   }
 };
 
 //buscar a(s) tarefa(s) do usuário
+/* TODO: OUTROS USUARIOS PODEM ACESSAR A TAREFA DO CRIADO. ARRUMAR ISSO! */
 const getTasksByUser = async (req, res) => {
   try {
     const tasks = await Task.find({ userId: req.userId })
@@ -122,11 +134,12 @@ const getTasksByUser = async (req, res) => {
 
     return res.status(200).json(tasks);
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao encontrar as tarefas." });
+    return res.status(500).json({ error: "Erro ao encontrar as tarefas." });
   }
 };
 
 //buscar uma tarefa do usuário
+/* TODO: OUTROS USUARIOS PODEM ACESSAR A TAREFA DO CRIADO. ARRUMAR ISSO! */
 const getTask = async (req, res) => {
   const { id } = req.params;
 
@@ -135,11 +148,11 @@ const getTask = async (req, res) => {
       .populate("collaborators", "name email profilePicture")
       .populate("userId", "name email profilePicture");
 
-    if (!task) return res.status(400).json({ error: "Tarefa não encontrada." });
+    if (!task) return res.status(404).json({ error: "Tarefa não encontrada." });
 
     return res.status(200).json(task);
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
+    return res.status(500).json({ error: "Erro ao procurar a tarefa." });
   }
 };
 
@@ -147,11 +160,9 @@ const getTask = async (req, res) => {
 const getTaskBySearch = async (req, res) => {
   const { search } = req.query;
 
-  const searchForLowerCase = search.toLowerCase();
-
   try {
     const task = await Task.find({
-      name: { $eq: searchForLowerCase },
+      name: new RegExp(search, "i"),
       userId: { $eq: req.userId },
     })
       .populate("collaborators", "name email profilePicture")
@@ -159,12 +170,12 @@ const getTaskBySearch = async (req, res) => {
 
     if (!task)
       return res
-        .status(400)
+        .status(404)
         .json({ error: "Não existe tarefa com essa pesquisa." });
 
     return res.status(200).json(task);
   } catch (error) {
-    return res.status(400).json({ error: "Erro ao procurar a tarefa." });
+    return res.status(500).json({ error: "Erro ao procurar a tarefa." });
   }
 };
 
@@ -181,7 +192,7 @@ const getTasksDoneCollaboratively = async (req, res) => {
 
     if (!tasks)
       return res
-        .status(400)
+        .status(404)
         .json({ error: "Tarefas em colaboração não encontradas." });
 
     return res.status(200).json(tasks);

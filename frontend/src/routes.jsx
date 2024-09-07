@@ -1,17 +1,12 @@
-import { Routes, Route, Navigate, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import App from "./App";
-
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
-
 import Main from "./pages/Main/Main";
 import Home from "./pages/Main/Home/Home";
-
 import Profile from "./pages/Main/Profile/Profile";
 import ProtectLoggedRoute from "./components/ProtectedRoute/ProtectLoggedRoute";
-import Auth from "./pages/Auth/Auth";
-import { useSelector } from "react-redux";
 import CreateTask from "./pages/Main/CreateTask/CreateTask";
 import Collaboration from "./pages/Main/Collaboration/Collaboration";
 import Project from "./pages/Main/Project/Project";
@@ -86,37 +81,3 @@ export const AppRoutes = createBrowserRouter([
     ],
   },
 ]);
-
-// const AppRoutes2 = () => {
-//   const { user } = useSelector((state) => state.auth);
-
-//   return (
-//     <Routes>
-//       <Route
-//         path="/"
-//         element={
-//           <ProtectedRoute>
-//             <Main />
-//           </ProtectedRoute>
-//         }
-//       >
-//         <Route path="/" element={<Home />} />
-//         <Route path="/profile/:id" element={<Profile />} />
-//         <Route path="/new-task" element={<CreateTask />} />
-//         <Route path="/collaboration" element={<Collaboration />} />
-//         <Route path="/project/:id" element={<Project />} />
-//         <Route path="/updateTask/:id" element={<UpdateTask />} />
-//         <Route path="/project/notes/:id" element={<Notes />} />
-//         <Route path="/search" element={<Search />} />
-//       </Route>
-
-//       <Route path="/auth" element={<Auth />}>
-//         <Route path="login" element={!user ? <Login /> : <Navigate to="/" />} />
-//         <Route
-//           path="register"
-//           element={!user ? <Register /> : <Navigate to="/" />}
-//         />
-//       </Route>
-//     </Routes>
-//   );
-// };

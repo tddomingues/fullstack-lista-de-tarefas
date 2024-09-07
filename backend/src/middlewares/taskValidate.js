@@ -13,6 +13,8 @@ const taskValidate = yup.object({
       .min(3, "Informações é muito curta."),
     priority: yup.string().required("Escolha a prioridade"),
     status: yup.string().required("Escolha o status."),
+    userId: yup.string().required("Id do usuário requerido."),
+    deadline: yup.string().required("Data para a entrega requerido."),
   }),
 });
 
